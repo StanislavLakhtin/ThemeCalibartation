@@ -10,6 +10,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
+import me.lakhtin.themecalibration.ui.theme.CalibrationAppTheme
 
 val LocalAppLocalization = compositionLocalOf {
     AppLocale.English
@@ -17,7 +18,7 @@ val LocalAppLocalization = compositionLocalOf {
 
 @Composable
 fun App() {
-    MaterialTheme {
+    CalibrationAppTheme {
         val currentLanguage = AppLocale.English
 
         CompositionLocalProvider(LocalAppLocalization provides currentLanguage) {
