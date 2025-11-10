@@ -1,5 +1,6 @@
 package me.lakhtin.themecalibration.ui.screens.typography
 
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import me.lakhtin.themecalibration.Route
 
@@ -14,5 +15,9 @@ fun TypographyScreen(
 fun TypographyScreenView(
     navigateTo: (Route) -> Unit
 ) {
-    CalibrateTypography()
+    LazyColumn {
+        item {
+            CalibrateTypography()
+        }
+    }
 }

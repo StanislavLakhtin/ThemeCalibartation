@@ -58,8 +58,8 @@ fun CalibrateTypography(
                     color = contentColor
                 )
                 Text(
-                    text = "${style.fontSize.value.toInt()}sp / ${style.lineHeight.value.toInt()}sp",
-                    style = MaterialTheme.typography.bodySmall,
+                    text = "${style.fontSize.value.toInt()}sp / ${style.lineHeight.value.toInt()}sp / ${style.fontWeight?.weight}",
+                    style = MaterialTheme.typography.labelMedium,
                     color = MaterialTheme.colorScheme.onBackground
                 )
             }
