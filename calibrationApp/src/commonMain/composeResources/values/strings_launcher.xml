@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<resources>
+    <plurals name="Дней">
+        <item quantity="one">%d day</item>      <!-- только 1 -->
+        <item quantity="other">%d days</item>   <!-- 0, 2, 3, 4, 5... -->
+    </plurals>
+</resources>

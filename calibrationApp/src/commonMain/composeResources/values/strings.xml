@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<resources>
+    <string name="en">English</string>
+    <string name="ru">Русский</string>
+    <string name="de">Deutsch</string>
+
+    <string name="kmp_app_name">NoProblem VPN</string>
+    <string name="kmp_app_name_short">NoProblemVPN</string>
+
+    <!-- Component header -->
+    <string name="headeraddbutton_add">Add</string>
+
+    <!-- Component StateText -->
+    <string name="statetext_not_protected">VPN is off</string>
+    <string name="statetext_protected">VPN is ON</string>
+
+    <!-- Main Menu -->
+    <string name="mainmenu_about">About</string>
+    <string name="mainmenu_privacy">Privacy Policy</string>
+    <string name="mainmenu_agreement">User Agreement</string>
+    <string name="mainmenu_subscriptions">Subscriptions</string>
+    <string name="mainmenu_applications">Applications</string>
+    <string name="mainmenu_support">Write to support</string>
+
+    <!-- Servers -->
+    <string name="servers_manual">Manual</string>
+    <string name="servers_auto">Auto</string>
+
+    <!-- HomeScreen -->
+    <string name="home_button_connect">Ready</string>
+    <string name="home_button_connecting">Connecting...</string>
+    <string name="home_button_disconnecting">Disconnecting</string>
+    <string name="home_button_connected">Secured</string>
+    <string name="home_button_relaunching">Relaunching</string>
+    <string name="home_no_server">There are no key</string>
+    <string name="home_placeholder_text">In order to use a VPN, you need a subscription</string>
+    <string name="home_placeholder_button">Get a subscription key</string>
+    <string name="home_routing_mode_text">Separate VPN selective mode is enabled</string>
+    <string name="home_routing_mode_switched_off_text">The selective mode is switched off.</string>
+    <string name="home_subscription_header">Subscription is valid for:</string>
+    <string name="home_subscription_days">days</string>
+    <string name="home_latency_server">Availability from:</string>
+    <string name="home_latency_best">best</string>
+    <string name="home_latency_good">good</string>
+    <string name="home_latency_fair">optimal</string>
+    <string name="home_latency_notes">The application monitors server availability from different locations around the world. Choose the location that is most convenient for you</string>
+    <string name="home_latency_notes_label">On Server Availability</string>
+
+    <!-- About Screen -->
+    <string name="about_version">Version</string>
+    <string name="about_build">build</string>
+
+    <string name="about_desc_header">About application</string>
+    <string name="about_desc">NoProblemVPN is your fast and secure internet access.\n\nWe provide instant connection to secure servers around the world, eliminating digital inequality and preserving your online anonymity.\n\nNoProblemVPN is:\n- high connection speed;\n- the ability to choose servers in different countries;\n- reliable protection of your data with modern encryption tools;\n- simple and intuitive interface.\n\nBe free online with NoProblemVPN!</string>
+
+    <string name="about_conf_header">Privacy Policy</string>
+    <string-array name="about_conf_content">
+        <item>NoProblemVPN Application\n\n\nThis Privacy Policy (the "Privacy Policy") is an integral part of the User Agreement attached as "Privacy policy".\nApplication NoProblemVPN is an app for mobile devices allowing to connect to Virtual Private Networks (VPN).\nApplication Publisher (Publisher) is the distributor of the Application supporting it under a license agreement provided by the attached User Agreement.\nApplication Copyright Holder is</item>
+        <item> the holder of exclusive rights to the Application who grants the Application license to the Application Publisher.\nPersonal Data is any information relating to a directly or indirectly identified or identifiable individual (data subject).\nUse of the Application means the User's unconditional consent to this Policy and the terms and conditions of processing of the User Information and Personal Data specified therein; in case</item>
+        <item> of disagreement with these terms and conditions, the User must refrain from using the Application.\n\n1. GENERAL PROVISIONS\n\n1.1. In this Policy, the User Information means:\n1.1.1. Information that the User provides on themselves, including during registration, purchase or use of the Application. However, using the Application does not require the User to provide their Personal Data.\n1.1.2. Technical information that is</item>
+        <item> automatically transferred when using the Application via the software installed on the User's device, including the specifications of the equipment and software used by the User, the date and time of access to services and other similar information collected for statistical purposes and to improve the Application's operability.\n1.1.3. This Privacy Policy shall be applied only to NoProblemVPN Application. The Application does not operate</item>
+        <item> and shall not be responsible for third-party websites accessed by the User via links available in the Application.\n1.2. The Publisher does not collect, process or store the User's Personal Data, unless such data is provided by the User with their consent.\n\n2. PURPOSES OF THE USER INFORMATION PROCESSING\n\n2.1. The Application shall only collect and store the User Information required to provide the basic Application capabilities</item>
+        <item> or perform User agreements and contracts, unless the law provides for mandatory storage of the information for a period prescribed by law.\n2.2. The Publisher may collect the User's Personal Data only if it is provided by the User with his/her express consent. The Publisher shall not store or process the User's Personal Data.\n2.3. If the Publisher collects the User's Personal Data for any reasons, the User may send the Publisher a notice of revocation of his/her</item>
+        <item> consent to personal data processing. The Publisher shall terminate processing of the User's Personal Data and delete the User's Personal Data within ten (10) business days from the date of such notice.\nThe notice of revocation of the consent to personal data processing may be sent to the email: feedback@no-problem-vpn.com or by contacting us via the Telegram bot @npvpnsupbot.\n2.4. The Application shall process User Information for the following purposes:\n2.4.1. To identify</item>
+        <item> of the User when they contact the Telegram bot to purchase an app subscription;\n2.4.2. To receive feedback from the User related to the Application, provision of services, processing of the User's requests and applications;\n2.4.3. To provide the User with reliable customer and technical support on issues related to the Application;\n2.4.4. To improve the quality of provided services;\n2.4.5. To collect and process statistical data.\n\n\n3. TERMS AND CONDITIONS OF</item>
+        <item> USER INFORMATION PROCESSING AND ITS TRANSFER TO THIRD PARTIES\n\n3.1. The Application shall store User Information under the laws of the Russian Federation.\n3.2. The User Information shall be kept confidential, unless the User voluntarily discloses his/her information or makes it public.\n3.3. The Application may share the User Information with third parties as follows:\n3.3.1. The User has provided their consent;\n3.3.2. The information is required for the User's use of a</item>
+        <item> certain service or to perform the User agreement or contract;\n3.3.4. The information may be disclosed under the Russian or other applicable laws and regulations.\n3.3.5. If the Application Publisher is changed, the new Publisher shall assume all obligations to comply with this Policy in relation to the User Information collected by it.\n3.4. The collected User's Personal Data shall always be processed by collecting, recording, classifying, accumulating, storing,</item>
+        <item> updating (changing), extracting, using, transferring (distributing, providing, accessing), anonymizing, blocking, deleting, and destroying personal data, including in personal data information systems with or without automated tools. The User's Personal Data shall be processed under Federal Law On Personal Data No. 152-FZ dated July 27, 2006.\n3.5. In case of loss of or unauthorized access to personal data, the Application Publisher shall notify the User of the loss of</item>
+        <item> or unauthorized access to the Personal Data.\n3.6. The Application Publisher shall take all reasonable organizational and technical measures to protect the User Information and Personal Data (if any) from unauthorized or accidental access, destruction, modification, blocking, copying, distribution, and other unlawful actions of third parties.\n3.7. The Application Publisher, together with the User, shall take all reasonable steps to prevent loss or other negative consequences</item>
+        <item> of loss of or unauthorized access to the User's Personal Data or the User Information.\n\n4. RESPONSIBILITIES\n\n4.1. The Application Publisher shall:\n4.1.1. Use the collected information for the purposes of this Privacy Policy only;\n4.1.2. Keep the confidential information secret, not disclose it without the prior written consent of the User, and shall not sell, exchange, publish or disclose the User Information and the collected User's Personal Data by any means other than </item>
+        <item> those provided for by this Privacy Policy;\n4.1.3. To ensure the protection of the processed User Information and the User's Personal Data (if any), take all reasonable legal, organizational, and technical measures to protect it from unauthorized, illegal or accidental access, destruction, modification, blocking, copying, provision, distribution of Personal Data, and other unlawful actions in relation to Personal Data;\n4.1.4. Block Personal Data (if available to the Publisher)</item>
+        <item> of the relevant User from the date of the User's application or request from the User, his/her legal representative or an authority responsible for protection of rights of data subjects during verification, if unreliable personal data or unlawful actions are identified.\n4.2. The User shall not be bound with any obligation to provide Personal Data to the Application. All Personal Data provided by the User shall be sent by them at their discretion and will with their consent.\n\n5.</item>
+        <item> LIABILITY OF THE PARTIES\n\n5.1. The defaulting Application Publisher shall be liable for losses incurred by the User due to the unlawful use of User Information and Personal Data under the laws of the Russian Federation.\n5.2. In the event of loss of or unauthorized access to the confidential information, the Application Publisher shall not be liable, if such confidential information was:\n5.2.1. In public domain before the loss or unauthorized access;\n5.2.2. Provided</item>
+        <item> by a third party before its collection by the Application Publisher;\n5.2.3. Disclosed with the consent of the User.\n5.3. The Application Copyright Holder shall neither provide services to the User nor store or collect User Information or Personal Data or have access to them. The Application Copyright Holder shall not be liable for the actions of the Application Publisher.\n\n6. DISPUTES\n\n6.1. Before filing a court action on disputes arising in the relations of the</item>
+        <item> Application User and the Application Publisher, the relative party shall file a claim (a written proposal for amicable dispute settlement).\n6.2. Within 30 calendar days from the date of the claim, the recipient shall notify the claimant in writing of the claim processing results.\n6.3. Should the settlement fail, the court action shall be filed.\n6.4. This Privacy Policy and the User's relations with the Application Publisher shall be governed by the applicable laws of the</item>
+        <item> Russian Federation.\n\n7. MISCELLANEOUS\n\n7.1. The Application Publisher may amend this Privacy Policy without the User's consent.\n7.2. The revised Privacy Policy shall be effective from the date of its publication in the Application, unless otherwise provided by the new version of the Privacy Policy.\n7.3. If you have any suggestions or questions regarding this Privacy Policy, please email to feedback@no-problem-vpn.com.\n7.4. The applicable Privacy Policy is provided in the "Privacy</item>
+        <item> policy" tab of the Application.\n7.5. This Privacy Policy is an integral part of the User Agreement that can be viewed in the "User agreement" tab of the Application.</item>
+    </string-array>
+
+    <string name="about_ua_header">User Agreement</string>
+    <string-array name="about_ua_content">
+        <item>for the use of NoProblemVPN Software\n\nBefore using the Software, please read the terms and conditions of the following User Agreement.\nAny use of the software by you means your full </item>
+        <item>and unconditional acceptance of this User Agreement and the Privacy Policy.\nIf you do not accept all terms and conditions of the User Agreement, you may not use the Software for any purpose and we kindly ask you </item>
+        <item>to delete the Software from your device.\n\n1. General Provisions\n1.1. This User Agreement (the "Agreement") contains the terms and conditions governing the use of NoProblemVPN software's version for mobile devices (the "Software") </item>
+        <item>and is concluded by and between any user of the Software (the "User") and "Universal Solutions" limited liability company (INN (Taxpayer Identification Number) 02307202510127, Kyrgyz Republic, Bishkek, Leninsky District, Ryskulova 57, Business Center "SHAR") as the Software Publisher under the License Agreement with the Software </item>
+        <item>Copyright Holder (the "Licensee").\n1.2. By copying the Software, installing it on your device or using the Software in any way, the User expresses his/her full and unconditional consent with all terms and conditions of the Agreement.\n</item>
+        <item>1.3. The Software may only be used under the terms and conditions of the Agreement. If the User does not accept all terms and conditions of the Agreement, the User may not use the Software for any purposes. You may not use the Software </item>
+        <item>in breach of (failure to comply with) any terms and conditions of the Agreement.\n1.4. The User shall use the Software under the terms and conditions of the Agreement on a paid basis. The amount of the fee for using the Software shall </item>
+        <item>be set based on the rates specified in the Software.\n1.5. The Software provides the capabilities to create a secure web connection using a VPN technology.\n1.6. The Agreement and all relations of the parties related to the use of the Software </item>
+        <item>shall be governed by the laws of the Russian Federation. Any claims or actions shall be considered by the court at the place of business of the Licensee.\n\n2. Orders and Payments\n2.1. The User shall place an Order to access the Software via the </item>
+        <item>Telegram messenger by contacting Chatbot @No_Problem_VPN_bot.\n2.2. The Chatbot provides the User with information on available rates for using the Software and payment methods.\n2.3. By paying the Software fees, the User confirms his/her full and unconditional </item>
+        <item>consent with the terms and conditions of the Agreement.\n2.4. The User's obligations to pay the Software fee shall be considered performed when the funds are credited to the Licensee's bank account.\n2.5. Payments between the User and the Licensee shall be </item>
+        <item>made by the methods specified by the Chatbot.\n2.6. After payment, the Chatbot shall send a payment confirmation and provide an access key to the Software within 1 hour.\n2.7. The Software shall be activated by entering the received Software access key in the </item>
+        <item>dedicated Software interface.\n\n3. Rights to the Software\n3.1. The Software Copyright Holder shall have the exclusive right to the Software. The Licensee shall have a simple non-exclusive license and a non-exclusive right to reproduce the Software </item>
+        <item>limited by the right to install, copy, adapt, and launch the Software, the right to sublicense, and to make copies worldwide.\n\n4. License\n4.1. The Licensee shall grant the User a non-transferable right to use the Software in the Russian Federation and </item>
+        <item>other countries where the Software is available under the terms and conditions of a simple (non-exclusive) license without an additional fee by using the Software for its intended functional purpose, to copy and install (reproduce) it on the User's </item>
+        <item>device(s) for such purpose. The User may install the Software on an unlimited number of devices. The User may use one purchased access key to the Software on maximum five (5) devices owned by the User.\n4.2. The license key may not be transferred to third </item>
+        <item>parties without a consent of the Copyright Holder. The User shall not have the right to sublicense.\n\n5. Restrictions\n5.1. Unless used as expressly provided for by the Agreement or the laws of the Russian Federation, the User may not modify, decompile, disassemble, </item>
+        <item>decrypt or otherwise change the object code of the Software to obtain information on implementation of the algorithms used in the Software, create derivative works using the Software or otherwise (permit to) use the Software, any components of the Software, Materials </item>
+        <item>stored in the Software on the User's device and other data without a written consent of the Licensee.\n5.2. The User may not reproduce and distribute the Software for commercial purposes (including for a fee), including as part of collections of software, without a written </item>
+        <item>consent of the Licensee.\n5.3. The User may not distribute the Software without a written consent of the Licensee.\n5.4. The Licensee reserves the right to establish any rules, limits and restrictions (technical, legal, organizational or other) on the use of the Software as a whole, </item>
+        <item>any materials provided by the Software, and may amend them at its discretion without prior notice to Users. The above rules, limits, and restrictions may be different for different categories of Users. The applicable rules shall be set out in the User Agreement and other documents </item>
+        <item>provided in the Software.\n\n6. Terms and Conditions of the Use of Individual Capabilities of the Software\n6.1. The operation of the Software is possible only with Internet access. The User shall independently obtain and pay for such access under the terms and conditions and rates of their </item>
+        <item>communications operator or Internet access provider.\n6.2. The Licensee shall not collect or store the User's Internet traffic, the web resources visited, and the actions performed. The User shall be fully liable for actions performed using the Software.\n6.3. The User agrees that, </item>
+        <item>when using the Software, the User shall comply with the laws of the Russian Federation and other countries where the User is located. The Software may not be used to violate the Russian laws or commit unlawful actions. The Software may not be used to infringe the copyrights </item>
+        <item>of third parties.\n6.4. The User agrees that the Software may not be used with the BitTorrent protocol, i.e. the User may not download or upload files using torrent clients.\n6.5. The Licensee reserves the right to restrict the User's access to the Software at its discretion in the </item>
+        <item>event of a violation of the Agreement or to use other measures in relation to the User to comply with the laws or respect the rights and legitimate interests of third parties.\n6.6. The Licensee shall not collect or store any personal data of the User.\n6.7. If the User loses access </item>
+        <item>to the Software (loss of the activation key) for reasons beyond the control of the Licensee, the Licensee will not be able to restore the user's access to the Software because personal data stored by the Licensee are not available.\n\n7. Liabilities\n7.1. The Software shall be </item>
+        <item>provided on an "as is" basis. The Licensee shall neither provide any guarantees of the error-free and uninterrupted operation of the Software or its individual components and/or capabilities, the Software's meeting the User's purpose and expectations, nor any other </item>
+        <item>guarantees, unless expressly specified in this License.\n7.2. The Licensee shall not be liable for any direct or indirect consequences of any use of or failure to use the Software, and/or damage caused to the User and/or third parties as a result of any use of, non-use of </item>
+        <item>or failure to use the Software or its individual components and/or capabilities, including possible errors or failures of the Software, unless expressly provided for by laws.\n7.3. The User hereby acknowledges and agrees that, when using the Software, the following information </item>
+        <item>is automatically and anonymously (without being linked to the User) transmitted to the Licensee, including the operating system of the User's device, the version and ID of the Software, use statistics of the Software's capabilities, and other technical information.\n7.4. All </item>
+        <item>questions and claims related to the use of / failure to use the Software and possible violation of the laws and/or rights of third parties by the Software shall be sent to the email feedback@no-problem-vpn.com or to the support chat specified in the Software.\n\n8. Updates/New Versions </item>
+        <item>of the Software and Third-Party Software\n8.1. The Agreement shall apply to all future updates / new versions of the Software. By agreeing to install an update/new version of the Software, the User accepts the terms and conditions of the Agreement for the relevant updates / new </item>
+        <item>versions of the Software, unless the update/installation of a new version of the Software is a subject matter of a different Agreement.\n8.2. The Software shall include third-party software as separate components. The list of such software and licenses is provided in the Software.\n\n</item>
+        <item>9. Amendments\n9.1. The Agreement may be unilaterally amended by the Licensee. The notice of amendment of the Agreement shall be provided in the application.\nThe above amendments of the agreement shall be effective from the date of their publication, unless otherwise specified in the relevant </item>
+        <item>publication.\n\n\n10. Licensee Details\n"Universal Solutions" LLC\nTIN 02307202510127\nRegistration number 318260-3301-ООО\nOKPO 34066134\nKyrgyz Republic, Bishkek, Leninsky District, Ryskulova 57, Business Center "SHAR" </item>
+    </string-array>
+
+    <!-- Agreement Dialog -->
+    <string name="termOfUse_title">Terms of use</string>
+    <string name="termOfUse_accept">Accept</string>
+    <string name="termOfUse_top_banner">By using this application, you agree to the Privacy Policy and the User Agreement.</string>
+    <string name="termOfUse_main_provisioning">The main provisions:</string>
+    <string-array name="termOfUse_points">
+        <item>The application is provided "as is" without any warranties</item>
+        <item>You are fully responsible for your use of the service</item>
+        <item>We collect minimal data (the device ID generated inside the application and your user IDs) necessary for the application to function</item>
+        <item>Your personal data is protected and not shared with third parties</item>
+        <item>Use of VPN must comply with the laws of your country</item>
+    </string-array>
+    <string name ="termOfUse_bottom_banner">By clicking "Accept" you confirm that you have read and agree to the terms of use.</string>
+
+    <!-- Subscriptions Screen -->
+    <string name="subscriptions_header">Subscription</string>
+    <string name="subscriptions_url_placeholder">Are you having trouble connecting?\nContact support and they will definitely help you</string>
+    <string name="subscriptions_url_placeholder_action">Write to support</string>
+    <string name="subscriptions_url_read_error">Subscription read error</string>
+    <string name="subscriptions_url_too_many_devices_error">Too many devices subscribed</string>
+    <string name="subscriptions_error_no_one_node">There is not a single available connection node within the subscription.</string>
+    <string name="subscriptions_get_subscription">Obtain subscription</string>
+    <string name="subscriptions_action_delete">Delete subscription</string>
+    <string name="subscriptions_action_tv">Subscribe TV</string>
+    <string name="subscriptions_action_tv_short">TV</string>
+    <string name="subscriptions_action_tv_modal_header">Adding a TV subscription</string>
+    <string name="subscriptions_action_tv_description">Open the app on your TV and scan the QR code on the screen</string>
+    <string name="subscriptions_add_from_clipboard">From clipboard</string>
+    <string name="subscriptions_add_from_qr">Scan QR</string>
+    <string name="subscriptions_modal_ok_header">Subscription added!</string>
+    <string name="subscriptions_modal_ok_text">Thank you for purchasing a subscription, and we wish you a pleasant use of our VPN service</string>
+    <string name="subscriptions_modal_ok_button">OK</string>
+    <string name="subscriptions_qr_scanner_desc">QR Scanner</string>
+    <string name="subscriptions_wait_subscription">The key is being installed...</string>
+    <string name="subscriptions_servers_list_header">List of servers:</string>
+    <string name="subscriptions_servers_list_button">Pay for a subscription</string>
+    <string name="subscriptions_available_nodes">- Available nodes -</string>
+    <string name="subscriptions_visit_url">visit</string>
+    <string name="subscriptions_deletemodal_header">Deleting a subscription</string>
+    <string name="subscriptions_deletemodal_body">Would you like to delete your subscription?</string>
+    <string name="subscriptions_deletemodal_yes">Yes</string>
+    <string name="subscriptions_deletemodal_no">No</string>
+
+    <!-- error toast messages -->
+    <string name="error_to_many_clients">There are too many devices subscribed!</string>
+    <string name="error_to_no_servers">The subscription does not contain a single server!</string>
+    <string name="error_to_cant_read_subscription">Subscription data cannot be read!</string>
+    <string name="error_third_party_vpn_running">Error: A third-party VPN is already running on the device!</string>
+
+    <!-- AppListScreen -->
+    <string name="applist_screen_header">Applications</string>
+    <string name="applist_placeholder">An application search is underway</string>
+    <string name="applist_save">Save</string>
+    <string name="applist_default">Default</string>
+    <string name="applist_whitelist">Whitelist</string>
+    <string name="applist_blacklist">Blacklist</string>
+    <string name="applist_default_bt">All</string>
+    <string name="applist_whitelist_bt">White</string>
+    <string name="applist_blacklist_bt">Black</string>
+    <string name="applist_default_desc">VPN will be active for all applications (include system ones)</string>
+    <string name="applist_default_desc_applist">All applications, including the system ones, will use a VPN connection to access the Internet. Please note that if you need to use something on your local network or in the country where you are currently located, it is better for you to use Whitelist mode.</string>
+    <string name="applist_whitelist_desc">VPN is active only for selected applications</string>
+    <string name="applist_blacklist_desc">VPN is active for all applications except selected ones</string>
+    <string name="applist_change_mode">Change the mode</string>
+    <string name="applist_routing_mode">Mode</string>
+    <string name="applist_search">Search</string>
+    <string name="applist_item_wl_selected_label">will use VPN</string>
+    <string name="applist_item_bl_selected_label">will NOT use VPN</string>
+    <string name="applist_action_back_header">Warning!</string>
+    <string name="applist_action_back_description">You have unsaved data. Are you sure you want to exit?</string>
+    <string name="applist_action_back_yes">Yes</string>
+    <string name="applist_action_back_no">No</string>
+
+    <!-- SubscriptionBox -->
+    <string name="subscriptionbox_supscription_current">Current subscription:</string>
+    <string name="subscriptionbox_supscription_not_found">Subscription not found</string>
+    <string name="subscriptionbox_supscription_not_found_text">The address of the server purchased by subscription in our telegram bot or in your personal account will be displayed here</string>
+    <string name="subscriptionbox_supscription">Subscription</string>
+    <string name="subscriptionbox_valid_until">Valid until:</string>
+    <string name="subscriptionbox_limit_strategy">Limit strategy:</string>
+    <string name="subscriptionbox_last_update">Last update:</string>
+    <string name="subscriptionbox_traffic">Downloaded:</string>
+    <string name="subscriptionbox_date_before">Expires:</string>
+    <string name="subscriptionbox_error_button_label">Got it</string>
+
+    <!-- QR scanner screen -->
+    <string name="qrscannerscreen_text">Scan QR-code</string>
+
+    <!-- TvInitSubscriptionScreen -->
+    <string name="tvinit_manual1">Open the NoProblemVPN app on your phone or tablet</string>
+    <string name="tvinit_manual2">Select "Subscriptions"\nfrom the menu</string>
+    <string name="tvinit_manual3">Tap "Subscribe TV"\nand scan THIS QR code</string>
+    <string name="tvinit_manual4">You’re connected.\nEnjoy!</string>
+
+    <!-- TvHomeScreen -->
+    <string name="tvhome_unsubscribe_header">Unlink device</string>
+    <string name="tvhome_unsubscribe_desc">Are you sure you want to unlink the device?</string>
+    <string name="tvhome_unsubscribe_yes">Confirm</string>
+    <string name="tvhome_unsubscribe_no">Cancel</string>
+    <string name="tvhome_nodebox_selected">Selected server</string>
+    <string name="tvhome_speed_best">Best</string>
+    <string name="tvhome_speed_good">Good</string>
+    <string name="tvhome_vpnstatus_on">VPN is on</string>
+    <string name="tvhome_vpnstatus_off">VPN is off</string>
+    <string name="tvhome_vpnstatus_connecting">Ready</string>
+    <string name="tvhome_subscription_validfor">Subscription is valid for:</string>
+    <string name="tvhome_subscription_validdays">days</string>
+    <string name="tvhome_menu_vpn">VPN: Start/Stop</string>
+    <string name="tvhome_menu_about">About</string>
+    <string name="tvhome_menu_privacypolicy">Privacy Policy</string>
+    <string name="tvhome_menu_useragreement">User Agreement</string>
+    <string name="tvhome_menu_unsubscribe">Unlink device</string>
+    <string name="tvhome_menu_subscribe">Subscribe</string>
+
+</resources>

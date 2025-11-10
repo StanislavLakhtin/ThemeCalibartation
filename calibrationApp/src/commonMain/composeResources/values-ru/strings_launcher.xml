@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<resources>
+    <plurals name="Дней">
+        <item quantity="one">%d день</item>   <!-- 1, 21, 31, 41... (кроме 11, 111...) -->
+        <item quantity="few">%d дня</item>    <!-- 2-4, 22-24, 32-34... (кроме 12-14) -->
+        <item quantity="many">%d дней</item>  <!-- 0, 5-20, 25-30... (включая 11-19) -->
+        <item quantity="other">%d дней</item>
+    </plurals>
+</resources>
