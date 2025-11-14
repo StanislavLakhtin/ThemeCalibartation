@@ -7,6 +7,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import me.lakhtin.themecalibration.ui.screens.color.ColorScreen
 import me.lakhtin.themecalibration.ui.screens.main.MainScreen
 import me.lakhtin.themecalibration.ui.screens.typography.TypographyScreen
 
@@ -36,6 +37,10 @@ fun NavigationActivity(
 
         composable<Route.TypographyScreenRoute> {
             TypographyScreen (navigateTo = navigateFunction)
+        }
+
+        composable<Route.ColorScreenRoute> {
+            ColorScreen (navigateTo = navigateFunction)
         }
     }
 }

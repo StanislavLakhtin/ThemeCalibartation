@@ -11,4 +11,7 @@ sealed class Route {
 
     @Serializable
     data object TypographyScreenRoute : Route()
+
+    @Serializable
+    data object ColorScreenRoute : Route()
 }
