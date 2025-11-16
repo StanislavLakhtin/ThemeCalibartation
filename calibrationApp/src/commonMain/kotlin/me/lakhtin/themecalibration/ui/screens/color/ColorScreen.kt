@@ -47,9 +47,6 @@ fun ColorScreenView ( navigateTo: (Route) -> Unit) {
     }
     val selectedColor = remember { mutableStateOf<ColorInfo>(availableColors[0]) }
 
-
-
-
     Scaffold(
         topBar = {
             TopBar("Color", { navigateTo(Route.NavigationUp) })
@@ -96,10 +93,6 @@ data class ColorInfo (
 )
 data class ColorPair(val name: String, val first: ColorInfo, val second: ColorInfo)
 
-fun ColorScheme.getAllColors () : List<Color> {
-    return listOf()
-}
-
 private fun getThemeColors(colorScheme: ColorScheme): List<ColorInfo> {
     return listOf(
         ColorInfo("primary", colorScheme.primary),
@@ -137,6 +130,7 @@ private fun getThemeColors(colorScheme: ColorScheme): List<ColorInfo> {
         ColorInfo("surfaceContainer", colorScheme.surfaceContainer),
         ColorInfo("surfaceContainerHigh", colorScheme.surfaceContainerHigh),
         ColorInfo("surfaceContainerHighest", colorScheme.surfaceContainerHighest)
+
     )
 }
 
@@ -185,6 +179,34 @@ private fun getThemeColorPairs(colorScheme: ColorScheme): List<ColorPair> {
         ColorPair("Background",
             ColorInfo("background", colorScheme.background),
             ColorInfo("onBackground", colorScheme.onBackground)
-        )
+        ),
+        ColorPair("Surface Dim",
+            ColorInfo("surface", colorScheme.surface),
+            ColorInfo("surfaceDim", colorScheme.surfaceDim)
+        ),
+        ColorPair("Surface Bright",
+            ColorInfo("surface", colorScheme.surface),
+            ColorInfo("surfaceBright", colorScheme.surfaceBright)
+        ),
+        ColorPair("Surface Container Lowest",
+            ColorInfo("surface", colorScheme.surface),
+            ColorInfo("surfaceContainerLowest", colorScheme.surfaceContainerLowest)
+        ),
+        ColorPair("Surface Container Low",
+            ColorInfo("surface", colorScheme.surface),
+            ColorInfo("surfaceContainerLow", colorScheme.surfaceContainerLow)
+        ),
+        ColorPair("Surface Container",
+            ColorInfo("surface", colorScheme.surface),
+            ColorInfo("surfaceContainer", colorScheme.surfaceContainer)
+        ),
+        ColorPair("Surface Container High",
+            ColorInfo("surface", colorScheme.surface),
+            ColorInfo("surfaceContainerHigh", colorScheme.surfaceContainerHigh)
+        ),
+        ColorPair("Surface Container Highest",
+            ColorInfo("surface", colorScheme.surface),
+            ColorInfo("surfaceContainerHighest", colorScheme.surfaceContainerHighest)
+        ),
     )
 }

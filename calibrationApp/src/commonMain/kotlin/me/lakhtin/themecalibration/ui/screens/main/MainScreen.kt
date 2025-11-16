@@ -100,6 +100,22 @@ fun MainScreenView(navigateTo: (Route) -> Unit) {
                 style = MaterialTheme.typography.displaySmall
             )
         }
+        ActionButton(
+            modifier = Modifier.fillMaxWidth()
+                .padding(16.dp)
+                .height(48.dp),
+            onClick = { navigateTo(Route.ColorPickerScreenRoute) },
+            colors = primaryButtonColors()
+        ) {
+            Text(
+                modifier = Modifier
+                    .padding(horizontal = 16.dp),
+                text = "Color picker screen",
+                maxLines = 1,
+                overflow = TextOverflow.MiddleEllipsis,
+                style = MaterialTheme.typography.displaySmall
+            )
+        }
     }
 }
 

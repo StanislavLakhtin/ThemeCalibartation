@@ -1,7 +1,8 @@
 package me.lakhtin.themecalibration.ui.screens.color.components
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.Composable
 import androidx.compose.material3.*
 import androidx.compose.ui.Alignment
@@ -33,14 +34,14 @@ fun ResultColorCard(
                 .fillMaxSize()
                 .padding(horizontal = 16.dp, vertical = 16.dp),
         ) {
-            Box(
+            Icon(
                 modifier = Modifier
-                    .size(32.dp)
-                    .background(
-                        color = iconColor,
-                        shape = MaterialTheme.shapes.extraLarge
-                    )
-                    .align(Alignment.TopEnd)
+                .size(44.dp)
+                .align(Alignment.TopEnd),
+                tint = iconColor,
+                imageVector = Icons.Default.Settings,
+                contentDescription = "Settings icon color check"
+
             )
             Column(
                 modifier = Modifier
