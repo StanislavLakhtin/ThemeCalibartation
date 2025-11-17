@@ -14,18 +14,27 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import me.lakhtin.themecalibration.Route
 import me.lakhtin.themecalibration.ui.components.TopBar
+import me.lakhtin.themecalibration.ui.screens.color.ColorScreenView
 import me.lakhtin.themecalibration.ui.screens.colorPicker.components.ColorPreviewCard
 import me.lakhtin.themecalibration.ui.screens.colorPicker.components.ColorWheelPicker
 
+
 @Composable
-fun ColorPickerScreen (
+fun ColorPickerScreen(
+    navigateTo: (Route) -> Unit
+) {
+    ColorPickerScreenView(navigateTo = navigateTo)
+}
+
+@Composable
+fun ColorPickerScreenView (
     navigateTo: (Route) -> Unit
 ) {
     val selectedColor = remember { mutableStateOf(Color.Blue) }
 
     Scaffold (
         topBar = {
-            TopBar("Color Picker", { navigateTo(Route.NavigationUp) })
+            TopBar("Color picker", { navigateTo(Route.NavigationUp) })
         }
     ) { innerPadding -> LazyColumn (
         modifier = Modifier
@@ -34,7 +43,11 @@ fun ColorPickerScreen (
         verticalArrangement = Arrangement.spacedBy(24.dp),
         contentPadding = PaddingValues(16.dp)
     ) {
-        item { ColorWheelPicker() }
+        item { ColorWheelPicker(
+            selectedColor = selectedColor.value,
+            onColorSelected = { selectedColor.value = it },
+            modifier = Modifier
+        ) }
         item { ColorPreviewCard(
             color = selectedColor.value,
             modifier = Modifier
