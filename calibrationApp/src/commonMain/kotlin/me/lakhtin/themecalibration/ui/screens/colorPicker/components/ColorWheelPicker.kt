@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -20,8 +21,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.pointer.pointerInput
@@ -38,11 +42,11 @@ fun ColorWheelPicker(
     val saturation = remember { mutableStateOf(1f) }
     val brightness = remember { mutableStateOf(1f) }
 
-    LaunchedEffect(hue, saturation, brightness) {
+    LaunchedEffect(hue.value, saturation.value, brightness.value) {
         onColorSelected(hsvToColor(hue.value, saturation.value, brightness.value))
     }
 
-    LaunchedEffect(selectedColor) {
+    LaunchedEffect(selectedColor.value) {
         val hsv = colorToHsv(selectedColor)
         hue.value = hsv[0]
         saturation.value = hsv[1]
@@ -86,6 +90,10 @@ fun HuePalette(
 ) {
     Box(
         modifier = modifier
+            .background(
+                color = Color.Transparent,
+                shape = RoundedCornerShape(8.dp)
+            )
             .pointerInput(Unit) {
                 detectTapGestures { offset ->
                     val hue = (offset.x / size.width) * 360f
@@ -216,10 +224,9 @@ fun ColorValuesDisplay(hue: Float, saturation: Float, brightness: Float) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Text("Hex", style = MaterialTheme.typography.labelSmall)
             val color = hsvToColor(hue, saturation, brightness)
+            val hex = colorToHex(color)
             Text(
-                "#${(color.red * 255).toInt().toString(16).padStart(2, '0')}" +
-                        (color.green * 255).toInt().toString(16).padStart(2, '0') +
-                        (color.blue * 255).toInt().toString(16).padStart(2, '0').uppercase(),
+                hex,
                 style = MaterialTheme.typography.bodyMedium
             )
         }
@@ -266,3 +273,8 @@ fun colorToHsv(color: Color): FloatArray {
     return floatArrayOf(if (h < 0) h + 360 else h, s, v)
 }
 
+fun colorToHex(color: Color): String {
+    return "#${(color.red * 255).toInt().toString(16).padStart(2, '0')}" +
+            (color.green * 255).toInt().toString(16).padStart(2, '0') +
+            (color.blue * 255).toInt().toString(16).padStart(2, '0').uppercase()
+}

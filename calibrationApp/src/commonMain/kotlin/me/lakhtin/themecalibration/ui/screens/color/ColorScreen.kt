@@ -62,7 +62,6 @@ fun ColorScreenView ( navigateTo: (Route) -> Unit) {
         ) {
             item {
                 ColorPairDropdownMenu(
-                    label = "Color Pair",
                     selectedColor = selectedColorPair.value,
                     colorPairs = themeColorPairs,
                     onColorSelected = { selectedColorPair.value = it }
@@ -70,7 +69,6 @@ fun ColorScreenView ( navigateTo: (Route) -> Unit) {
             }
             item {
                 ColorDropdownMenu(
-                    label = "All Color",
                     selectedColor = selectedColor.value,
                     colors = availableColors,
                     onColorSelected = { selectedColor.value = it }

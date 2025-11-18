@@ -28,7 +28,6 @@ import me.lakhtin.themecalibration.ui.screens.color.ColorInfo
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ColorDropdownMenu(
-    label: String,
     selectedColor: ColorInfo,
     colors: List<ColorInfo>,
     onColorSelected: (ColorInfo) -> Unit
