@@ -22,7 +22,6 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun ColorInput(
     hexValue: String,
-    isError: Boolean,
     onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -31,7 +30,6 @@ fun ColorInput(
             value = hexValue,
             onValueChange = onValueChange,
             modifier = Modifier.fillMaxWidth(),
-            isError = isError,
             placeholder = {
                 Text("#hex", color = MaterialTheme.colorScheme.onSurfaceVariant)
             },
@@ -39,18 +37,8 @@ fun ColorInput(
                 Icon(
                     imageVector = Icons.Default.Tag,
                     contentDescription = "Hex color",
-                    tint = if (isError) MaterialTheme.colorScheme.error
-                    else MaterialTheme.colorScheme.primary
+                    tint = MaterialTheme.colorScheme.primary
                 )
-            },
-            trailingIcon = {
-                if (isError) {
-                    Icon(
-                        imageVector = Icons.Default.Error,
-                        contentDescription = "Invalid color",
-                        tint = MaterialTheme.colorScheme.error
-                    )
-                }
             },
             colors = TextFieldDefaults.colors(
                 focusedContainerColor = MaterialTheme.colorScheme.surface,
@@ -64,35 +52,4 @@ fun ColorInput(
             )
         )
     }
-}
-
-fun parseHexColor(hex: String): Color? {
-    var cleanHex = hex.trim().uppercase()
-
-    if (!cleanHex.startsWith("#")) {
-        cleanHex = "#$cleanHex"
-    }
-
-    return when {
-        cleanHex.matches(Regex("#[0-9A-F]{3}")) -> {
-            val r = cleanHex.substring(1, 2).repeat(2).toInt(16) / 255f
-            val g = cleanHex.substring(2, 3).repeat(2).toInt(16) / 255f
-            val b = cleanHex.substring(3, 4).repeat(2).toInt(16) / 255f
-            Color(r, g, b)
-        }
-
-        cleanHex.matches(Regex("#[0-9A-F]{6}")) -> {
-            val r = cleanHex.substring(1, 3).toInt(16) / 255f
-            val g = cleanHex.substring(3, 5).toInt(16) / 255f
-            val b = cleanHex.substring(5, 7).toInt(16) / 255f
-            Color(r, g, b)
-        }
-        else -> null
-    }
-}
-
-fun isValidHex(hex: String): Boolean {
-    val cleanHex = hex.trim().uppercase()
-    return cleanHex.matches(Regex("#?[0-9A-F]{3}")) ||
-            cleanHex.matches(Regex("#?[0-9A-F]{6}"))
 }
