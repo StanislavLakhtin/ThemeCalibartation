@@ -12,8 +12,6 @@ import me.lakhtin.themecalibration.ui.screens.colorPicker.ColorPickerScreen
 import me.lakhtin.themecalibration.ui.screens.main.MainScreen
 import me.lakhtin.themecalibration.ui.screens.typography.TypographyScreen
 import androidx.compose.runtime.remember
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.russhwolf.settings.Settings
 import me.lakhtin.themecalibration.ui.screens.colorPicker.viewmodel.ColorViewModel
 
 @ExperimentalComposeUiApi

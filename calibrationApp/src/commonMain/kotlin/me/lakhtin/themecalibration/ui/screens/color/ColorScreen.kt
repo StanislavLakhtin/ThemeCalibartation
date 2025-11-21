@@ -10,7 +10,10 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -22,6 +25,7 @@ import me.lakhtin.themecalibration.ui.screens.color.ColorInfo
 import me.lakhtin.themecalibration.ui.screens.color.components.ColorDropdownMenu
 import me.lakhtin.themecalibration.ui.screens.color.components.ColorPairDropdownMenu
 import me.lakhtin.themecalibration.ui.screens.color.components.ResultColorCard
+import me.lakhtin.themecalibration.ui.screens.colorPicker.viewmodel.ColorViewModel
 import me.lakhtin.themecalibration.ui.theme.*
 
 @Composable
@@ -32,7 +36,9 @@ fun ColorScreen(
 }
 
 @Composable
-fun ColorScreenView ( navigateTo: (Route) -> Unit) {
+fun ColorScreenView ( viewModel: ColorViewModel = ColorViewModel(), navigateTo: (Route) -> Unit) {
+    val savedHex by viewModel.color.collectAsState()
+
     val colorScheme = MaterialTheme.colorScheme
     val allThemeColors = getThemeColors(colorScheme)
     val themeColorPairs = getThemeColorPairs(colorScheme)
@@ -79,6 +85,9 @@ fun ColorScreenView ( navigateTo: (Route) -> Unit) {
                     colorPair = selectedColorPair.value,
                     selectedColor = selectedColor.value,
                 )
+            }
+            item {
+                Text("Сохранненый цвет $savedHex")
             }
         }
     }

@@ -43,8 +43,6 @@ fun ColorPickerScreenView (
     viewModel: ColorViewModel = ColorViewModel(),
     navigateTo: (Route) -> Unit
 ) {
-    val savedHex by viewModel.color.collectAsState()
-
     val selectedColor = remember { mutableStateOf<Color>(Color.Red) }
     val selectedHue = remember { mutableStateOf(0f) }
     val hexInput = remember { mutableStateOf<String>(colorToHex(selectedColor.value)) }
