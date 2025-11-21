@@ -8,9 +8,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.*
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
-import me.lakhtin.themecalibration.ui.screens.colorPicker.viewmodel.ColorViewModel
 import me.lakhtin.themecalibration.ui.theme.CalibrationAppTheme
 val LocalAppLocalization = compositionLocalOf {
     AppLocale.English
@@ -20,7 +18,6 @@ val LocalAppLocalization = compositionLocalOf {
 fun App() {
     CalibrationAppTheme {
         val currentLanguage = AppLocale.English
-        val vm: ColorViewModel = viewModel()
 
         CompositionLocalProvider(LocalAppLocalization provides currentLanguage) {
             Surface(
@@ -29,7 +26,6 @@ fun App() {
                     .fillMaxSize()
             ) {
                 NavigationActivity(
-                    vm = vm,
                     navController = rememberNavController()
                 )
             }

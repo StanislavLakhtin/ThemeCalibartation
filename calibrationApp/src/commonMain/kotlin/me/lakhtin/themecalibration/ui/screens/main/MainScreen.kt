@@ -6,9 +6,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.heightIn
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeContentPadding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -34,7 +31,6 @@ fun MainScreen(
 
 @Composable
 fun MainScreenView(navigateTo: (Route) -> Unit) {
-    // var showContent by remember { mutableStateOf(false) }
     Column(
         modifier = Modifier
             .safeContentPadding()
@@ -66,25 +62,6 @@ fun MainScreenView(navigateTo: (Route) -> Unit) {
         item {
             GoToCard("Палитра") {navigateTo(Route.ColorPickerScreenRoute)}
         }
-//        ActionButton(
-//            modifier = Modifier.fillMaxWidth()
-//                .padding(16.dp)
-//                .height(48.dp),
-//            onClick = { showContent = !showContent },
-//            colors = gradientButtonColors()
-//        ) {
-//            Text("Click me!", style = MaterialTheme.typography.titleLarge)
-//        }
-//        AnimatedVisibility(showContent) {
-//            val greeting = remember { Greeting().greet() }
-//            Column(
-//                modifier = Modifier.fillMaxWidth(),
-//                horizontalAlignment = Alignment.CenterHorizontally,
-//            ) {
-//                Image(painterResource(Res.drawable.compose_multiplatform), null)
-//                Text("Compose: $greeting")
-//            }
-//        }
     }
         }
 }

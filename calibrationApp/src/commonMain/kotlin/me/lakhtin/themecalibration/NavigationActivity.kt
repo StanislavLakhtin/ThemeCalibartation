@@ -9,17 +9,21 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import me.lakhtin.themecalibration.ui.screens.color.ColorScreen
 import me.lakhtin.themecalibration.ui.screens.colorPicker.ColorPickerScreen
-import me.lakhtin.themecalibration.ui.screens.colorPicker.viewmodel.ColorViewModel
 import me.lakhtin.themecalibration.ui.screens.main.MainScreen
 import me.lakhtin.themecalibration.ui.screens.typography.TypographyScreen
+import androidx.compose.runtime.remember
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.russhwolf.settings.Settings
+import me.lakhtin.themecalibration.ui.screens.colorPicker.viewmodel.ColorViewModel
 
 @ExperimentalComposeUiApi
 @Composable
 fun NavigationActivity(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
-    vm: ColorViewModel
 ) {
+   val colorViewModel = remember { ColorViewModel() }
+
     val navigateFunction: (Route) -> Unit = { navigateTo ->
         when (navigateTo) {
             is Route.NavigationUp -> navController.navigateUp()
@@ -47,7 +51,7 @@ fun NavigationActivity(
         }
 
         composable<Route.ColorPickerScreenRoute> {
-            ColorPickerScreen (vm, navigateTo = navigateFunction)
+            ColorPickerScreen (viewModel = colorViewModel, navigateTo = navigateFunction)
         }
     }
 }

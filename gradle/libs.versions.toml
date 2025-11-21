@@ -17,7 +17,8 @@ materialIconsExtended = "1.7.8"
 # KMP datetime
 kotlinx-datetime = "0.7.1"
 kotlinx-serialization = "1.9.0"
-colormath = "3.3.0"
+russhwolf = "1.3.0"
+firebaseFunctionsKtx = "22.1.0"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -37,8 +38,13 @@ kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.
 # Kotlinx serialization
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
 
+# Icons
 androidx-material-icons-extended = { module = "androidx.compose.material:material-icons-extended", version.ref = "materialIconsExtended" }
-colormath = { module = "com.github.ajalt.colormath:colormath", version.ref = "colormath" }
+
+# room
+russhwolf-multiplatform = { module = "com.russhwolf:multiplatform-settings", version.ref = "russhwolf" }
+russhwolf-multiplatform-coroutines = { module = "com.russhwolf:multiplatform-settings-coroutines", version.ref = "russhwolf" }
+
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

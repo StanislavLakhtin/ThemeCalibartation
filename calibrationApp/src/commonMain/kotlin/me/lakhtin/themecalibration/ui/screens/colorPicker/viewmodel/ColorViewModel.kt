@@ -1,25 +1,17 @@
 package me.lakhtin.themecalibration.ui.screens.colorPicker.viewmodel
 
-import androidx.compose.ui.graphics.Color
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import me.lakhtin.themecalibration.data.repository.ColorRepository
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.asStateFlow
 
-class ColorViewModel : ViewModel() {
-    private val _state = MutableStateFlow(ColorUiState())
-    val state: StateFlow<ColorUiState> = _state
+class ColorViewModel(
+    private val repo: ColorRepository = ColorRepository()
+) {
+    private val _color = MutableStateFlow(repo.getSavedColor())
+    val color = _color.asStateFlow()
 
-    fun onEvent(event: ColorEvent) {
-        when (event) {
-            is ColorEvent.SelectColor -> updateColor(event.color)
-        }
-    }
-
-    private fun updateColor(color: Color) {
-        viewModelScope.launch {
-            _state.value = _state.value.copy(selectedColor = color)
-        }
+    fun saveColor(hex: String) {
+        repo.saveColor(hex)
+        _color.value = hex
     }
 }

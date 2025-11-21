@@ -43,7 +43,8 @@ kotlin {
             implementation(libs.androidx.lifecycle.runtimeCompose)
             implementation(libs.bundles.compose)
             implementation(compose.materialIconsExtended)
-            implementation(libs.colormath)
+            implementation(libs.russhwolf.multiplatform)
+            implementation(libs.russhwolf.multiplatform.coroutines)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)

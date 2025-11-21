@@ -5,9 +5,10 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -15,6 +16,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import me.lakhtin.themecalibration.Route
 import me.lakhtin.themecalibration.ui.components.TopBar
 import me.lakhtin.themecalibration.ui.screens.colorPicker.components.ColorInput
@@ -24,91 +26,87 @@ import me.lakhtin.themecalibration.ui.screens.colorPicker.utils.colorToHex
 import me.lakhtin.themecalibration.ui.screens.colorPicker.utils.colorToHsv
 import me.lakhtin.themecalibration.ui.screens.colorPicker.utils.hexToColor
 import me.lakhtin.themecalibration.ui.screens.colorPicker.utils.isValidHex
-import me.lakhtin.themecalibration.ui.screens.colorPicker.viewmodel.ColorEvent
-import me.lakhtin.themecalibration.ui.screens.colorPicker.viewmodel.ColorUiState
 import me.lakhtin.themecalibration.ui.screens.colorPicker.viewmodel.ColorViewModel
 import kotlin.math.absoluteValue
 
 
 @Composable
 fun ColorPickerScreen(
-    vm: ColorViewModel,
+    viewModel: ColorViewModel = ColorViewModel(),
     navigateTo: (Route) -> Unit
 ) {
-    val state by vm.state.collectAsState()
-
-    ColorPickerScreenView(
-        state = state,
-        onEvent = vm::onEvent,
-        navigateTo = navigateTo
-    )
+    ColorPickerScreenView(viewModel = viewModel, navigateTo = navigateTo)
 }
 
 @Composable
-fun ColorPickerScreenView(
-    state: ColorUiState,
-    onEvent: (ColorEvent) -> Unit,
+fun ColorPickerScreenView (
+    viewModel: ColorViewModel = ColorViewModel(),
     navigateTo: (Route) -> Unit
 ) {
+    val savedHex by viewModel.color.collectAsState()
+
+    val selectedColor = remember { mutableStateOf<Color>(Color.Red) }
     val selectedHue = remember { mutableStateOf(0f) }
-    val hexInput = remember { mutableStateOf<String>("") }
+    val hexInput = remember { mutableStateOf<String>(colorToHex(selectedColor.value)) }
 
-    LaunchedEffect(state.selectedColor) {
-        hexInput.value = colorToHex(state.selectedColor)
-        val hsv = colorToHsv(state.selectedColor, previousHue = null)
-        selectedHue.value = hsv[0]
-    }
-
-    fun onValueChangeHex(newHex: String) {
+    fun onValueChangeHex (newHex: String) {
         hexInput.value = newHex
         if (isValidHex(newHex)) {
             val newColor = hexToColor(newHex)
-            val newHsv = colorToHsv(newColor, previousHue = null)
+            val newHsv = colorToHsv(
+                newColor,
+                previousHue = null
+            )
             selectedHue.value = newHsv[0]
-            onEvent(ColorEvent.SelectColor(newColor))
+            selectedColor.value = hexToColor(newHex)
         }
     }
 
-    Scaffold(
+    hexInput.value = colorToHex(selectedColor.value)
+
+
+    Scaffold (
         topBar = {
             TopBar("Color picker") { navigateTo(Route.NavigationUp) }
         }
     ) { innerPadding ->
-        LazyColumn(
+        LazyColumn (
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(innerPadding),
+        verticalArrangement = Arrangement.spacedBy(24.dp),
+        contentPadding = PaddingValues(16.dp)
+    ) {
+        item { ColorWheelPicker(
+            selectedColor = selectedColor.value,
+            onColorSelected = { newColor ->
+                if (!colorsAreClose(selectedColor.value, newColor)) {
+                    selectedColor.value = newColor
+                }
+            },
+            selectedHue = selectedHue.value,
+            onHueSelected = { selectedHue.value = it },
             modifier = Modifier
-                .fillMaxSize()
-                .padding(innerPadding),
-            verticalArrangement = Arrangement.spacedBy(24.dp),
-            contentPadding = PaddingValues(16.dp)
-        ) {
-            item {
-                ColorWheelPicker(
-                    selectedColor = state.selectedColor,
-                    onColorSelected = { newColor ->
-                        if (!colorsAreClose(state.selectedColor, newColor)) {
-                            onEvent(ColorEvent.SelectColor(newColor))
-                        }
-                    },
-                    selectedHue = selectedHue.value,
-                    onHueSelected = { selectedHue.value = it },
-                    modifier = Modifier
-                )
-            }
-            item {
-                ColorInput(
-                    hexValue = hexInput.value,
-                    onValueChange = { newHex ->
-                        onValueChangeHex(newHex)
-                    }
-                )
-            }
-            item {
-                ColorPreviewCard(
-                    color = state.selectedColor,
-                )
-            }
+        ) }
+        item {
+            ColorInput(
+                hexValue = hexInput.value,
+                onValueChange = { newHex ->
+                    onValueChangeHex(newHex)
+                }
+            )
         }
-    }
+        item { ColorPreviewCard(
+            color = selectedColor.value,
+        ) }
+        item {
+                Button(onClick = {
+                    viewModel.saveColor(hexInput.value)
+                }) {
+                    Text("Сохранить")
+                }
+        }
+    } }
 }
 
 
