@@ -7,6 +7,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -21,75 +24,91 @@ import me.lakhtin.themecalibration.ui.screens.colorPicker.utils.colorToHex
 import me.lakhtin.themecalibration.ui.screens.colorPicker.utils.colorToHsv
 import me.lakhtin.themecalibration.ui.screens.colorPicker.utils.hexToColor
 import me.lakhtin.themecalibration.ui.screens.colorPicker.utils.isValidHex
+import me.lakhtin.themecalibration.ui.screens.colorPicker.viewmodel.ColorEvent
+import me.lakhtin.themecalibration.ui.screens.colorPicker.viewmodel.ColorUiState
+import me.lakhtin.themecalibration.ui.screens.colorPicker.viewmodel.ColorViewModel
 import kotlin.math.absoluteValue
 
 
 @Composable
 fun ColorPickerScreen(
+    vm: ColorViewModel,
     navigateTo: (Route) -> Unit
 ) {
-    ColorPickerScreenView(navigateTo = navigateTo)
+    val state by vm.state.collectAsState()
+
+    ColorPickerScreenView(
+        state = state,
+        onEvent = vm::onEvent,
+        navigateTo = navigateTo
+    )
 }
 
 @Composable
-fun ColorPickerScreenView (
+fun ColorPickerScreenView(
+    state: ColorUiState,
+    onEvent: (ColorEvent) -> Unit,
     navigateTo: (Route) -> Unit
 ) {
-    val selectedColor = remember { mutableStateOf<Color>(Color.Red) }
     val selectedHue = remember { mutableStateOf(0f) }
-    val hexInput = remember { mutableStateOf<String>(colorToHex(selectedColor.value)) }
+    val hexInput = remember { mutableStateOf<String>("") }
 
-    fun onValueChangeHex (newHex: String) {
+    LaunchedEffect(state.selectedColor) {
+        hexInput.value = colorToHex(state.selectedColor)
+        val hsv = colorToHsv(state.selectedColor, previousHue = null)
+        selectedHue.value = hsv[0]
+    }
+
+    fun onValueChangeHex(newHex: String) {
         hexInput.value = newHex
         if (isValidHex(newHex)) {
             val newColor = hexToColor(newHex)
-            val newHsv = colorToHsv(
-                newColor,
-                previousHue = null
-            )
+            val newHsv = colorToHsv(newColor, previousHue = null)
             selectedHue.value = newHsv[0]
-            selectedColor.value = hexToColor(newHex)
+            onEvent(ColorEvent.SelectColor(newColor))
         }
     }
 
-    hexInput.value = colorToHex(selectedColor.value)
-
-
-    Scaffold (
+    Scaffold(
         topBar = {
             TopBar("Color picker") { navigateTo(Route.NavigationUp) }
         }
     ) { innerPadding ->
-        LazyColumn (
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(innerPadding),
-        verticalArrangement = Arrangement.spacedBy(24.dp),
-        contentPadding = PaddingValues(16.dp)
-    ) {
-        item { ColorWheelPicker(
-            selectedColor = selectedColor.value,
-            onColorSelected = { newColor ->
-                if (!colorsAreClose(selectedColor.value, newColor)) {
-                    selectedColor.value = newColor
-                }
-            },
-            selectedHue = selectedHue.value,
-            onHueSelected = { selectedHue.value = it },
+        LazyColumn(
             modifier = Modifier
-        ) }
-        item {
-            ColorInput(
-                hexValue = hexInput.value,
-                onValueChange = { newHex ->
-                    onValueChangeHex(newHex)
-                }
-            )
+                .fillMaxSize()
+                .padding(innerPadding),
+            verticalArrangement = Arrangement.spacedBy(24.dp),
+            contentPadding = PaddingValues(16.dp)
+        ) {
+            item {
+                ColorWheelPicker(
+                    selectedColor = state.selectedColor,
+                    onColorSelected = { newColor ->
+                        if (!colorsAreClose(state.selectedColor, newColor)) {
+                            onEvent(ColorEvent.SelectColor(newColor))
+                        }
+                    },
+                    selectedHue = selectedHue.value,
+                    onHueSelected = { selectedHue.value = it },
+                    modifier = Modifier
+                )
+            }
+            item {
+                ColorInput(
+                    hexValue = hexInput.value,
+                    onValueChange = { newHex ->
+                        onValueChangeHex(newHex)
+                    }
+                )
+            }
+            item {
+                ColorPreviewCard(
+                    color = state.selectedColor,
+                )
+            }
         }
-        item { ColorPreviewCard(
-            color = selectedColor.value,
-        ) }
-    } }
+    }
 }
 
 
