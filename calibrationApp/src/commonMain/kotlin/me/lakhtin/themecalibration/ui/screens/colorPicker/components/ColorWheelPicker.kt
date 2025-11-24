@@ -135,7 +135,7 @@ fun HuePalette(
                 color = Color.White,
                 radius = 16.dp.toPx(),
                 center = Offset(markerX, size.height / 2),
-                style = Stroke(width = 3.dp.toPx() )
+                style = Stroke(width = 3.dp.toPx())
             )
         }
     }

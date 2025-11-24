@@ -1,4 +1,4 @@
-package me.lakhtin.themecalibration.ui.screens.color.components
+package me.lakhtin.themecalibration.ui.screens.colorPicker.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
+import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -21,52 +22,57 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import me.lakhtin.themecalibration.ui.screens.color.ColorInfo
+import me.lakhtin.themecalibration.data.repository.ColorKey
+import me.lakhtin.themecalibration.ui.screens.colorPicker.utils.hexToColor
+import me.lakhtin.themecalibration.ui.screens.colorPicker.viewmodel.ColorViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ColorDropdownMenu(
-    selectedColor: ColorInfo,
-    colors: List<ColorInfo>,
-    onColorSelected: (ColorInfo) -> Unit
+fun ColorKeyDropdownMenu(
+    viewModel: ColorViewModel = ColorViewModel(),
+    selectedColorKey: ColorKey,
+    onColorKeySelected: (ColorKey) -> Unit,
+    currentColor: Color,
+    modifier: Modifier = Modifier
 ) {
     var expanded by remember { mutableStateOf(false) }
+
+    val colorScheme = MaterialTheme.colorScheme
 
     ExposedDropdownMenuBox(
         expanded = expanded,
         onExpandedChange = { expanded = !expanded }
     ) {
-        Row (
+        Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .border(width = 2.dp, color = MaterialTheme.colorScheme.tertiary, shape = MaterialTheme.shapes.small)
-                .padding(horizontal = 16.dp ,vertical = 12.dp),
+                .menuAnchor()
+                .border(
+                    width = 2.dp,
+                    color = MaterialTheme.colorScheme.outline,
+                    shape = MaterialTheme.shapes.large
+                )
+                .padding(horizontal = 16.dp, vertical = 12.dp),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(12.dp)){
-            Box(
-                modifier = Modifier
-                    .size(24.dp)
-                    .background(
-                        color = selectedColor.color,
-                        shape = MaterialTheme.shapes.small
-                    )
-            )
+            horizontalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
             Text(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .menuAnchor(),
-                text = selectedColor.name,
-                fontWeight = FontWeight.Medium
+                text = selectedColorKey.name,
+                style = MaterialTheme.typography.bodyMedium,
+                fontWeight = FontWeight.Medium,
+                modifier = Modifier.weight(1f)
             )
+            ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)
         }
 
         ExposedDropdownMenu(
             expanded = expanded,
             onDismissRequest = { expanded = false },
         ) {
-            colors.forEach { color ->
+            ColorKey.entries.forEach { colorKey ->
                 DropdownMenuItem(
                     text = {
                         Row(
@@ -77,15 +83,19 @@ fun ColorDropdownMenu(
                                 modifier = Modifier
                                     .size(24.dp)
                                     .background(
-                                        color = color.color,
+                                        color = hexToColor(viewModel.getColor(colorKey, colorScheme)),
                                         shape = MaterialTheme.shapes.small
                                     )
                             )
-                            Text(color.name,  fontWeight = FontWeight.Medium)
+                            Text(
+                                text = colorKey.name,
+                                style = MaterialTheme.typography.bodyMedium,
+                                fontWeight = FontWeight.Medium
+                            )
                         }
                     },
                     onClick = {
-                        onColorSelected(color)
+                        onColorKeySelected(colorKey)
                         expanded = false
                     }
                 )

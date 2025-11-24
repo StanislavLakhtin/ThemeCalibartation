@@ -20,7 +20,7 @@ fun NavigationActivity(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
 ) {
-   val colorViewModel = remember { ColorViewModel() }
+    val colorViewModel = remember { ColorViewModel() }
 
     val navigateFunction: (Route) -> Unit = { navigateTo ->
         when (navigateTo) {
@@ -37,19 +37,19 @@ fun NavigationActivity(
     ) {
 
         composable<Route.MainScreenRoute> {
-            MainScreen (navigateTo = navigateFunction)
+            MainScreen(navigateTo = navigateFunction)
         }
 
         composable<Route.TypographyScreenRoute> {
-            TypographyScreen (navigateTo = navigateFunction)
+            TypographyScreen(navigateTo = navigateFunction)
         }
 
         composable<Route.ColorScreenRoute> {
-            ColorScreen (navigateTo = navigateFunction)
+            ColorScreen(navigateTo = navigateFunction)
         }
 
         composable<Route.ColorPickerScreenRoute> {
-            ColorPickerScreen (viewModel = colorViewModel, navigateTo = navigateFunction)
+            ColorPickerScreen(viewModel = colorViewModel, navigateTo = navigateFunction)
         }
     }
 }

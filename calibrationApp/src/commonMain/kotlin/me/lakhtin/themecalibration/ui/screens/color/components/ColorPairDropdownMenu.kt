@@ -52,7 +52,6 @@ fun ColorPairDropdownMenu(
                             color = selectedColor.first.color,
                             shape = MaterialTheme.shapes.small
                         )
-                        .border(width = 2.dp, color = MaterialTheme.colorScheme.tertiary, shape = MaterialTheme.shapes.small)
                 )
                 Box(
                     modifier = Modifier
@@ -61,7 +60,6 @@ fun ColorPairDropdownMenu(
                             color = selectedColor.second.color,
                             shape = MaterialTheme.shapes.small
                         )
-                        .border(width = 2.dp, color = MaterialTheme.colorScheme.tertiary, shape = MaterialTheme.shapes.small)
                 )
                 Text(
                     modifier = Modifier

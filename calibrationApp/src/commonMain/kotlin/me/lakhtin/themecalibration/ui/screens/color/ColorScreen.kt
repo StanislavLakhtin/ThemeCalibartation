@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.ColorScheme
@@ -12,21 +11,23 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import me.lakhtin.themecalibration.Route
+import me.lakhtin.themecalibration.data.repository.ColorKey
 import me.lakhtin.themecalibration.ui.components.TopBar
-import me.lakhtin.themecalibration.ui.screens.color.ColorInfo
 import me.lakhtin.themecalibration.ui.screens.color.components.ColorDropdownMenu
 import me.lakhtin.themecalibration.ui.screens.color.components.ColorPairDropdownMenu
 import me.lakhtin.themecalibration.ui.screens.color.components.ResultColorCard
+import me.lakhtin.themecalibration.ui.screens.colorPicker.utils.hexToColor
 import me.lakhtin.themecalibration.ui.screens.colorPicker.viewmodel.ColorViewModel
-import me.lakhtin.themecalibration.ui.theme.*
 
 @Composable
 fun ColorScreen(
@@ -36,31 +37,32 @@ fun ColorScreen(
 }
 
 @Composable
-fun ColorScreenView ( viewModel: ColorViewModel = ColorViewModel(), navigateTo: (Route) -> Unit) {
-    val savedHex by viewModel.color.collectAsState()
-
+fun ColorScreenView(viewModel: ColorViewModel = viewModel(), navigateTo: (Route) -> Unit) {
     val colorScheme = MaterialTheme.colorScheme
-    val allThemeColors = getThemeColors(colorScheme)
-    val themeColorPairs = getThemeColorPairs(colorScheme)
 
-    val selectedColorPair= remember { mutableStateOf<ColorPair>(themeColorPairs[0]) }
-    val availableColors = remember(selectedColorPair.value) {
-        selectedColorPair.value.let { pair ->
-            allThemeColors.filter {
-                it.name != pair.first.name && it.name != pair.second.name
-            }
+    val allThemeColors = getCurrentThemeColors(viewModel, colorScheme)
+    val themeColorPairs = getCurrentThemeColorPairs(viewModel, colorScheme)
+
+    var selectedColorPair by remember { mutableStateOf(themeColorPairs[0]) }
+    var selectedColor by remember { mutableStateOf(allThemeColors[0]) }
+
+    val availableColors = remember(selectedColorPair) {
+        allThemeColors.filter {
+            it.name != selectedColorPair.first.name && it.name != selectedColorPair.second.name
         }
     }
-    val selectedColor = remember { mutableStateOf<ColorInfo>(availableColors[0]) }
+
+    if (availableColors.none { it.name == selectedColor.name }) {
+        selectedColor = availableColors.firstOrNull() ?: allThemeColors[0]
+    }
 
     Scaffold(
         topBar = {
             TopBar("Color", { navigateTo(Route.NavigationUp) })
         }
-
     ) { innerPadding ->
-        LazyColumn (
-            modifier= Modifier
+        LazyColumn(
+            modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding),
             verticalArrangement = Arrangement.spacedBy(24.dp),
@@ -68,152 +70,164 @@ fun ColorScreenView ( viewModel: ColorViewModel = ColorViewModel(), navigateTo: 
         ) {
             item {
                 ColorPairDropdownMenu(
-                    selectedColor = selectedColorPair.value,
+                    selectedColor = selectedColorPair,
                     colorPairs = themeColorPairs,
-                    onColorSelected = { selectedColorPair.value = it }
+                    onColorSelected = { selectedColorPair = it }
                 )
             }
             item {
                 ColorDropdownMenu(
-                    selectedColor = selectedColor.value,
+                    selectedColor = selectedColor,
                     colors = availableColors,
-                    onColorSelected = { selectedColor.value = it }
+                    onColorSelected = { selectedColor = it }
                 )
             }
             item {
                 ResultColorCard(
-                    colorPair = selectedColorPair.value,
-                    selectedColor = selectedColor.value,
+                    colorPair = selectedColorPair,
+                    selectedColor = selectedColor,
                 )
-            }
-            item {
-                Text("Сохранненый цвет $savedHex")
             }
         }
     }
-
 }
 
-data class ColorInfo (
+data class ColorInfo(
     val name: String,
-    val color: Color
+    val color: Color,
+    val colorKey: ColorKey? = null
 )
-data class ColorPair(val name: String, val first: ColorInfo, val second: ColorInfo)
 
-private fun getThemeColors(colorScheme: ColorScheme): List<ColorInfo> {
+data class ColorPair(
+    val name: String,
+    val first: ColorInfo,
+    val second: ColorInfo
+)
+
+@Composable
+private fun getCurrentThemeColors(
+    viewModel: ColorViewModel,
+    colorScheme: ColorScheme
+): List<ColorInfo> {
+    return ColorKey.entries.map { key ->
+        val hexColor = viewModel.getColor(key, colorScheme)
+        ColorInfo(
+            name = key.name,
+            color = hexToColor(hexColor),
+            colorKey = key
+        )
+    }
+}
+
+@Composable
+private fun getCurrentThemeColorPairs(
+    viewModel: ColorViewModel,
+    colorScheme: ColorScheme
+): List<ColorPair> {
     return listOf(
-        ColorInfo("primary", colorScheme.primary),
-        ColorInfo("onPrimary", colorScheme.onPrimary),
-        ColorInfo("primaryContainer", colorScheme.primaryContainer),
-        ColorInfo("onPrimaryContainer", colorScheme.onPrimaryContainer),
-        ColorInfo("secondary", colorScheme.secondary),
-        ColorInfo("onSecondary", colorScheme.onSecondary),
-        ColorInfo("secondaryContainer", colorScheme.secondaryContainer),
-        ColorInfo("onSecondaryContainer", colorScheme.onSecondaryContainer),
-        ColorInfo("tertiary", colorScheme.tertiary),
-        ColorInfo("onTertiary", colorScheme.onTertiary),
-        ColorInfo("tertiaryContainer", colorScheme.tertiaryContainer),
-        ColorInfo("onTertiaryContainer", colorScheme.onTertiaryContainer),
-        ColorInfo("error", colorScheme.error),
-        ColorInfo("onError", colorScheme.onError),
-        ColorInfo("errorContainer", colorScheme.errorContainer),
-        ColorInfo("onErrorContainer", colorScheme.onErrorContainer),
-        ColorInfo("background", colorScheme.background),
-        ColorInfo("onBackground", colorScheme.onBackground),
-        ColorInfo("surface", colorScheme.surface),
-        ColorInfo("onSurface", colorScheme.onSurface),
-        ColorInfo("surfaceVariant", colorScheme.surfaceVariant),
-        ColorInfo("onSurfaceVariant", colorScheme.onSurfaceVariant),
-        ColorInfo("outline", colorScheme.outline),
-        ColorInfo("outlineVariant", colorScheme.outlineVariant),
-        ColorInfo("scrim", colorScheme.scrim),
-        ColorInfo("inverseSurface", colorScheme.inverseSurface),
-        ColorInfo("inverseOnSurface", colorScheme.inverseOnSurface),
-        ColorInfo("inversePrimary", colorScheme.inversePrimary),
-        ColorInfo("surfaceDim", colorScheme.surfaceDim),
-        ColorInfo("surfaceBright", colorScheme.surfaceBright),
-        ColorInfo("surfaceContainerLowest", colorScheme.surfaceContainerLowest),
-        ColorInfo("surfaceContainerLow", colorScheme.surfaceContainerLow),
-        ColorInfo("surfaceContainer", colorScheme.surfaceContainer),
-        ColorInfo("surfaceContainerHigh", colorScheme.surfaceContainerHigh),
-        ColorInfo("surfaceContainerHighest", colorScheme.surfaceContainerHighest)
-
+        ColorPair(
+            "Primary",
+            getColorInfo(ColorKey.PRIMARY, viewModel, colorScheme),
+            getColorInfo(ColorKey.ON_PRIMARY, viewModel, colorScheme)
+        ),
+        ColorPair(
+            "Secondary",
+            getColorInfo(ColorKey.SECONDARY, viewModel, colorScheme),
+            getColorInfo(ColorKey.ON_SECONDARY, viewModel, colorScheme)
+        ),
+        ColorPair(
+            "Tertiary",
+            getColorInfo(ColorKey.TERTIARY, viewModel, colorScheme),
+            getColorInfo(ColorKey.ON_TERTIARY, viewModel, colorScheme)
+        ),
+        ColorPair(
+            "Primary Container",
+            getColorInfo(ColorKey.PRIMARY_CONTAINER, viewModel, colorScheme),
+            getColorInfo(ColorKey.ON_PRIMARY_CONTAINER, viewModel, colorScheme)
+        ),
+        ColorPair(
+            "Secondary Container",
+            getColorInfo(ColorKey.SECONDARY_CONTAINER, viewModel, colorScheme),
+            getColorInfo(ColorKey.ON_SECONDARY_CONTAINER, viewModel, colorScheme)
+        ),
+        ColorPair(
+            "Tertiary Container",
+            getColorInfo(ColorKey.TERTIARY_CONTAINER, viewModel, colorScheme),
+            getColorInfo(ColorKey.ON_TERTIARY_CONTAINER, viewModel, colorScheme)
+        ),
+        ColorPair(
+            "Error",
+            getColorInfo(ColorKey.ERROR, viewModel, colorScheme),
+            getColorInfo(ColorKey.ON_ERROR, viewModel, colorScheme)
+        ),
+        ColorPair(
+            "Error Container",
+            getColorInfo(ColorKey.ERROR_CONTAINER, viewModel, colorScheme),
+            getColorInfo(ColorKey.ON_ERROR_CONTAINER, viewModel, colorScheme)
+        ),
+        ColorPair(
+            "Surface",
+            getColorInfo(ColorKey.SURFACE, viewModel, colorScheme),
+            getColorInfo(ColorKey.ON_SURFACE, viewModel, colorScheme)
+        ),
+        ColorPair(
+            "Surface Variant",
+            getColorInfo(ColorKey.SURFACE_VARIANT, viewModel, colorScheme),
+            getColorInfo(ColorKey.ON_SURFACE_VARIANT, viewModel, colorScheme)
+        ),
+        ColorPair(
+            "Background",
+            getColorInfo(ColorKey.BACKGROUND, viewModel, colorScheme),
+            getColorInfo(ColorKey.ON_BACKGROUND, viewModel, colorScheme)
+        ),
+        ColorPair(
+            "Surface Dim",
+            getColorInfo(ColorKey.SURFACE, viewModel, colorScheme),
+            getColorInfo(ColorKey.SURFACE_DIM, viewModel, colorScheme)
+        ),
+        ColorPair(
+            "Surface Bright",
+            getColorInfo(ColorKey.SURFACE, viewModel, colorScheme),
+            getColorInfo(ColorKey.SURFACE_BRIGHT, viewModel, colorScheme)
+        ),
+        ColorPair(
+            "Surface Container Lowest",
+            getColorInfo(ColorKey.SURFACE, viewModel, colorScheme),
+            getColorInfo(ColorKey.SURFACE_CONTAINER_LOWEST, viewModel, colorScheme)
+        ),
+        ColorPair(
+            "Surface Container Low",
+            getColorInfo(ColorKey.SURFACE, viewModel, colorScheme),
+            getColorInfo(ColorKey.SURFACE_CONTAINER_LOW, viewModel, colorScheme)
+        ),
+        ColorPair(
+            "Surface Container",
+            getColorInfo(ColorKey.SURFACE, viewModel, colorScheme),
+            getColorInfo(ColorKey.SURFACE_CONTAINER, viewModel, colorScheme)
+        ),
+        ColorPair(
+            "Surface Container High",
+            getColorInfo(ColorKey.SURFACE, viewModel, colorScheme),
+            getColorInfo(ColorKey.SURFACE_CONTAINER_HIGH, viewModel, colorScheme)
+        ),
+        ColorPair(
+            "Surface Container Highest",
+            getColorInfo(ColorKey.SURFACE, viewModel, colorScheme),
+            getColorInfo(ColorKey.SURFACE_CONTAINER_HIGHEST, viewModel, colorScheme)
+        ),
     )
 }
 
-private fun getThemeColorPairs(colorScheme: ColorScheme): List<ColorPair> {
-    return listOf(
-        ColorPair("Primary",
-            ColorInfo("primary", colorScheme.primary),
-            ColorInfo("onPrimary", colorScheme.onPrimary)
-        ),
-        ColorPair("Secondary",
-            ColorInfo("secondary", colorScheme.secondary),
-            ColorInfo("onSecondary", colorScheme.onSecondary)
-        ),
-        ColorPair("Tertiary",
-            ColorInfo("tertiary", colorScheme.tertiary),
-            ColorInfo("onTertiary", colorScheme.onTertiary)
-        ),
-        ColorPair("Primary Container",
-            ColorInfo("primaryContainer", colorScheme.primaryContainer),
-            ColorInfo("onPrimaryContainer", colorScheme.onPrimaryContainer)
-        ),
-        ColorPair("Secondary Container",
-            ColorInfo("secondaryContainer", colorScheme.secondaryContainer),
-            ColorInfo("onSecondaryContainer", colorScheme.onSecondaryContainer)
-        ),
-        ColorPair("Tertiary Container",
-            ColorInfo("tertiaryContainer", colorScheme.tertiaryContainer),
-            ColorInfo("onTertiaryContainer", colorScheme.onTertiaryContainer)
-        ),
-        ColorPair("Error",
-            ColorInfo("error", colorScheme.error),
-            ColorInfo("onError", colorScheme.onError)
-        ),
-        ColorPair("Error Container",
-            ColorInfo("errorContainer", colorScheme.errorContainer),
-            ColorInfo("onErrorContainer", colorScheme.onErrorContainer)
-        ),
-        ColorPair("Surface",
-            ColorInfo("surface", colorScheme.surface),
-            ColorInfo("onSurface", colorScheme.onSurface)
-        ),
-        ColorPair("Surface Variant",
-            ColorInfo("surfaceVariant", colorScheme.surfaceVariant),
-            ColorInfo("onSurfaceVariant", colorScheme.onSurfaceVariant)
-        ),
-        ColorPair("Background",
-            ColorInfo("background", colorScheme.background),
-            ColorInfo("onBackground", colorScheme.onBackground)
-        ),
-        ColorPair("Surface Dim",
-            ColorInfo("surface", colorScheme.surface),
-            ColorInfo("surfaceDim", colorScheme.surfaceDim)
-        ),
-        ColorPair("Surface Bright",
-            ColorInfo("surface", colorScheme.surface),
-            ColorInfo("surfaceBright", colorScheme.surfaceBright)
-        ),
-        ColorPair("Surface Container Lowest",
-            ColorInfo("surface", colorScheme.surface),
-            ColorInfo("surfaceContainerLowest", colorScheme.surfaceContainerLowest)
-        ),
-        ColorPair("Surface Container Low",
-            ColorInfo("surface", colorScheme.surface),
-            ColorInfo("surfaceContainerLow", colorScheme.surfaceContainerLow)
-        ),
-        ColorPair("Surface Container",
-            ColorInfo("surface", colorScheme.surface),
-            ColorInfo("surfaceContainer", colorScheme.surfaceContainer)
-        ),
-        ColorPair("Surface Container High",
-            ColorInfo("surface", colorScheme.surface),
-            ColorInfo("surfaceContainerHigh", colorScheme.surfaceContainerHigh)
-        ),
-        ColorPair("Surface Container Highest",
-            ColorInfo("surface", colorScheme.surface),
-            ColorInfo("surfaceContainerHighest", colorScheme.surfaceContainerHighest)
-        ),
+@Composable
+private fun getColorInfo(
+    key: ColorKey,
+    viewModel: ColorViewModel,
+    colorScheme: ColorScheme
+): ColorInfo {
+    val hexColor = viewModel.getColor(key, colorScheme)
+    return ColorInfo(
+        name = key.name,
+        color = hexToColor(hexColor),
+        colorKey = key
     )
 }

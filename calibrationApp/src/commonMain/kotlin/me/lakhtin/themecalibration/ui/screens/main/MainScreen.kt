@@ -45,24 +45,24 @@ fun MainScreenView(navigateTo: (Route) -> Unit) {
                 .aspectRatio(1f),
             contentScale = ContentScale.Crop
         )
-    LazyVerticalGrid(
-        columns = GridCells.Fixed(2),
-        modifier = Modifier
-            .safeContentPadding()
-            .fillMaxSize(),
-        verticalArrangement = Arrangement.spacedBy(16.dp),
-        horizontalArrangement = Arrangement.spacedBy(16.dp)
-    ) {
-        item {
-            GoToCard("Шрифты") {navigateTo(Route.TypographyScreenRoute)}
-        }
-        item {
-            GoToCard("Цвета") {navigateTo(Route.ColorScreenRoute)}
-        }
-        item {
-            GoToCard("Палитра") {navigateTo(Route.ColorPickerScreenRoute)}
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(2),
+            modifier = Modifier
+                .safeContentPadding()
+                .fillMaxSize(),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+            horizontalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            item {
+                GoToCard("Шрифты") { navigateTo(Route.TypographyScreenRoute) }
+            }
+            item {
+                GoToCard("Цвета") { navigateTo(Route.ColorScreenRoute) }
+            }
+            item {
+                GoToCard("Палитра") { navigateTo(Route.ColorPickerScreenRoute) }
+            }
         }
     }
-        }
 }
 
