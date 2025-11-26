@@ -46,7 +46,7 @@ fun NavigationActivity(
         }
 
         composable<Route.ColorScreenRoute> {
-            ColorScreen(navigateTo = navigateFunction)
+            ColorScreen(viewModel = colorViewModel, navigateTo = navigateFunction)
         }
 
         composable<Route.ColorPickerScreenRoute> {

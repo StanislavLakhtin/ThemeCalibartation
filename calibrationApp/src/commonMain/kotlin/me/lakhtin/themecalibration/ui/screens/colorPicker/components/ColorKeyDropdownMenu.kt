@@ -22,7 +22,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import me.lakhtin.themecalibration.data.repository.ColorKey
@@ -33,13 +32,10 @@ import me.lakhtin.themecalibration.ui.screens.colorPicker.viewmodel.ColorViewMod
 @Composable
 fun ColorKeyDropdownMenu(
     viewModel: ColorViewModel = ColorViewModel(),
-    selectedColorKey: ColorKey,
+    selectedColorKey: ColorKey?,
     onColorKeySelected: (ColorKey) -> Unit,
-    currentColor: Color,
-    modifier: Modifier = Modifier
 ) {
     var expanded by remember { mutableStateOf(false) }
-
     val colorScheme = MaterialTheme.colorScheme
 
     ExposedDropdownMenuBox(
@@ -60,9 +56,11 @@ fun ColorKeyDropdownMenu(
             horizontalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             Text(
-                text = selectedColorKey.name,
+                text = selectedColorKey?.name ?: "Выберите цвет",
                 style = MaterialTheme.typography.bodyMedium,
-                fontWeight = FontWeight.Medium,
+                fontWeight = if (selectedColorKey == null) FontWeight.Normal else FontWeight.Medium,
+                color = if (selectedColorKey == null) MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
+                else MaterialTheme.colorScheme.onSurface,
                 modifier = Modifier.weight(1f)
             )
             ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)

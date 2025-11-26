@@ -12,6 +12,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -46,74 +48,88 @@ fun ColorPickerScreen(
 fun ColorPickerScreenView(
     viewModel: ColorViewModel = ColorViewModel(), navigateTo: (Route) -> Unit
 ) {
-    val selectedColor = remember { mutableStateOf<Color>(Color.Red) }
-    val selectedHue = remember { mutableStateOf(0f) }
-    val hexInput = remember { mutableStateOf<String>(colorToHex(selectedColor.value)) }
-    var selectedColorKey by remember { mutableStateOf(ColorKey.PRIMARY) }
+    val colorScheme = MaterialTheme.colorScheme
+    val selectedColorKey by viewModel.selectedColorKey.collectAsState()
+    var selectedColor by remember { mutableStateOf<Color>(Color.Red) }
+    var selectedHue by remember { mutableStateOf(0f) }
+    var hexInput by remember { mutableStateOf("") }
 
-    fun onValueChangeHex(newHex: String) {
-        hexInput.value = newHex
-        if (isValidHex(newHex)) {
-            val newColor = hexToColor(newHex)
-            val newHsv = colorToHsv(
-                newColor, previousHue = null
-            )
-            selectedHue.value = newHsv[0]
-            selectedColor.value = hexToColor(newHex)
-        }
+    selectedColorKey?.let { key ->
+        val colorHex = viewModel.getColor(key, colorScheme)
+        val color = hexToColor(colorHex)
+        selectedColor = color
+        selectedHue = colorToHsv(color, null)[0]
+        hexInput = colorHex
     }
 
-    hexInput.value = colorToHex(selectedColor.value)
-
+    fun onValueChangeHex(newHex: String) {
+        hexInput = newHex
+        if (isValidHex(newHex)) {
+            val newColor = hexToColor(newHex)
+            val newHsv = colorToHsv(newColor, previousHue = null)
+            selectedHue = newHsv[0]
+            selectedColor = newColor
+        }
+    }
 
     Scaffold(
         topBar = {
             TopBar("Палитра") { navigateTo(Route.NavigationUp) }
-        }) { innerPadding ->
+        }
+    ) { innerPadding ->
         LazyColumn(
-            modifier = Modifier.fillMaxSize().padding(innerPadding),
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding),
             verticalArrangement = Arrangement.spacedBy(24.dp),
             contentPadding = PaddingValues(16.dp)
         ) {
             item {
                 ColorWheelPicker(
-                    selectedColor = selectedColor.value,
+                    selectedColor = selectedColor,
                     onColorSelected = { newColor ->
-                        if (!colorsAreClose(selectedColor.value, newColor)) {
-                            selectedColor.value = newColor
+                        if (!colorsAreClose(selectedColor, newColor)) {
+                            selectedColor = newColor
+                            hexInput = colorToHex(newColor)
                         }
                     },
-                    selectedHue = selectedHue.value,
-                    onHueSelected = { selectedHue.value = it },
+                    selectedHue = selectedHue,
+                    onHueSelected = { selectedHue = it },
                     modifier = Modifier
                 )
             }
             item {
                 ColorInput(
-                    hexValue = hexInput.value, onValueChange = { newHex ->
+                    hexValue = hexInput,
+                    onValueChange = { newHex ->
                         onValueChangeHex(newHex)
-                    })
+                    }
+                )
             }
             item {
-                ColorPreviewCard(
-                    color = selectedColor.value,
-                )
+                ColorPreviewCard(color = selectedColor)
             }
             item {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
-                    Button(onClick = {
-                        viewModel.saveColor(selectedColorKey, colorToHex(selectedColor.value))
-                    }) {
+                    Button(
+                        onClick = {
+                            selectedColorKey?.let { key ->
+                                viewModel.saveColor(key, colorToHex(selectedColor))
+                            }
+                        },
+                        enabled = selectedColorKey != null
+                    ) {
                         Text("Сохранить в")
                     }
                     ColorKeyDropdownMenu(
                         viewModel = viewModel,
-                        selectedColorKey = selectedColorKey, onColorKeySelected = { newKey ->
-                            selectedColorKey = newKey
-                        }, currentColor = selectedColor.value, modifier = Modifier.fillMaxWidth()
+                        selectedColorKey = selectedColorKey,
+                        onColorKeySelected = { newKey ->
+                            viewModel.setSelectedColor(newKey)
+                        },
                     )
                 }
             }

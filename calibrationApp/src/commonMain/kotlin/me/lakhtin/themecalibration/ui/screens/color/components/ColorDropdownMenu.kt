@@ -8,10 +8,15 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBackIosNew
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -23,6 +28,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import me.lakhtin.themecalibration.data.repository.ColorKey
 import me.lakhtin.themecalibration.ui.screens.color.ColorInfo
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -30,7 +36,8 @@ import me.lakhtin.themecalibration.ui.screens.color.ColorInfo
 fun ColorDropdownMenu(
     selectedColor: ColorInfo,
     colors: List<ColorInfo>,
-    onColorSelected: (ColorInfo) -> Unit
+    onColorSelected: (ColorInfo) -> Unit,
+    onColorEditClick: (ColorKey) -> Unit,
 ) {
     var expanded by remember { mutableStateOf(false) }
 
@@ -38,13 +45,18 @@ fun ColorDropdownMenu(
         expanded = expanded,
         onExpandedChange = { expanded = !expanded }
     ) {
-        Row (
+        Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .border(width = 2.dp, color = MaterialTheme.colorScheme.tertiary, shape = MaterialTheme.shapes.small)
-                .padding(horizontal = 16.dp ,vertical = 12.dp),
+                .border(
+                    width = 2.dp,
+                    color = MaterialTheme.colorScheme.tertiary,
+                    shape = MaterialTheme.shapes.small
+                )
+                .padding(horizontal = 16.dp, vertical = 12.dp),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(12.dp)){
+            horizontalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
             Box(
                 modifier = Modifier
                     .size(24.dp)
@@ -81,7 +93,21 @@ fun ColorDropdownMenu(
                                         shape = MaterialTheme.shapes.small
                                     )
                             )
-                            Text(color.name,  fontWeight = FontWeight.Medium)
+                            Text(color.name, fontWeight = FontWeight.Medium)
+                            IconButton(
+                                onClick = {
+                                    onColorEditClick(color.colorKey ?: ColorKey.PRIMARY)
+                                    expanded = false
+                                }
+                            ) {
+                                Icon(
+                                    modifier = Modifier
+                                        .size(16.dp),
+                                    tint = MaterialTheme.colorScheme.outline,
+                                    imageVector = Icons.Default.Settings,
+                                    contentDescription = "edit color"
+                                )
+                            }
                         }
                     },
                     onClick = {

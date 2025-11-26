@@ -80,6 +80,12 @@ class ColorRepository(
         settings.remove(key.toString())
     }
 
+    fun isColorModified(key: ColorKey, colorScheme: ColorScheme, hex: String): Boolean {
+        val defaultHex = getDefaultColor(key, colorScheme)
+        println("$defaultHex $hex")
+        return defaultHex != hex
+    }
+
     private fun getDefaultColor(key: ColorKey, colorScheme: ColorScheme): String {
         return colorToHex(
             when (key) {

@@ -161,14 +161,10 @@ fun SaturationBrightnessPicker(
                     val v = 1f - (pos.y / size.height).coerceIn(0f, 1f)
                     onSaturationBrightnessSelected(hue,s, v)
                 }
+
             }
             .pointerInput(hue) {
                 detectDragGestures(
-                    onDragStart = { pos ->
-                        val s = (pos.x / size.width).coerceIn(0f, 1f)
-                        val v = 1f - (pos.y / size.height).coerceIn(0f, 1f)
-                        onSaturationBrightnessSelected(hue,s, v)
-                    },
                     onDrag = { change, _ ->
                         val s = (change.position.x / size.width).coerceIn(0f, 1f)
                         val v = 1f - (change.position.y / size.height).coerceIn(0f, 1f)

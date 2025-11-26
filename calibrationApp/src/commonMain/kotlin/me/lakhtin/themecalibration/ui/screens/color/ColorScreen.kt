@@ -12,6 +12,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -31,13 +32,17 @@ import me.lakhtin.themecalibration.ui.screens.colorPicker.viewmodel.ColorViewMod
 
 @Composable
 fun ColorScreen(
+    viewModel: ColorViewModel = ColorViewModel(),
     navigateTo: (Route) -> Unit
 ) {
-    ColorScreenView(navigateTo = navigateTo)
+    ColorScreenView(viewModel, navigateTo = navigateTo)
 }
 
 @Composable
-fun ColorScreenView(viewModel: ColorViewModel = viewModel(), navigateTo: (Route) -> Unit) {
+fun ColorScreenView(
+    viewModel: ColorViewModel = ColorViewModel(),
+    navigateTo: (Route) -> Unit
+) {
     val colorScheme = MaterialTheme.colorScheme
 
     val allThemeColors = getCurrentThemeColors(viewModel, colorScheme)
@@ -79,7 +84,11 @@ fun ColorScreenView(viewModel: ColorViewModel = viewModel(), navigateTo: (Route)
                 ColorDropdownMenu(
                     selectedColor = selectedColor,
                     colors = availableColors,
-                    onColorSelected = { selectedColor = it }
+                    onColorSelected = { selectedColor = it },
+                    onColorEditClick = { colorKey ->
+                        viewModel.setSelectedColor(colorKey)
+                        navigateTo(Route.ColorPickerScreenRoute)
+                    },
                 )
             }
             item {
@@ -90,144 +99,4 @@ fun ColorScreenView(viewModel: ColorViewModel = viewModel(), navigateTo: (Route)
             }
         }
     }
-}
-
-data class ColorInfo(
-    val name: String,
-    val color: Color,
-    val colorKey: ColorKey? = null
-)
-
-data class ColorPair(
-    val name: String,
-    val first: ColorInfo,
-    val second: ColorInfo
-)
-
-@Composable
-private fun getCurrentThemeColors(
-    viewModel: ColorViewModel,
-    colorScheme: ColorScheme
-): List<ColorInfo> {
-    return ColorKey.entries.map { key ->
-        val hexColor = viewModel.getColor(key, colorScheme)
-        ColorInfo(
-            name = key.name,
-            color = hexToColor(hexColor),
-            colorKey = key
-        )
-    }
-}
-
-@Composable
-private fun getCurrentThemeColorPairs(
-    viewModel: ColorViewModel,
-    colorScheme: ColorScheme
-): List<ColorPair> {
-    return listOf(
-        ColorPair(
-            "Primary",
-            getColorInfo(ColorKey.PRIMARY, viewModel, colorScheme),
-            getColorInfo(ColorKey.ON_PRIMARY, viewModel, colorScheme)
-        ),
-        ColorPair(
-            "Secondary",
-            getColorInfo(ColorKey.SECONDARY, viewModel, colorScheme),
-            getColorInfo(ColorKey.ON_SECONDARY, viewModel, colorScheme)
-        ),
-        ColorPair(
-            "Tertiary",
-            getColorInfo(ColorKey.TERTIARY, viewModel, colorScheme),
-            getColorInfo(ColorKey.ON_TERTIARY, viewModel, colorScheme)
-        ),
-        ColorPair(
-            "Primary Container",
-            getColorInfo(ColorKey.PRIMARY_CONTAINER, viewModel, colorScheme),
-            getColorInfo(ColorKey.ON_PRIMARY_CONTAINER, viewModel, colorScheme)
-        ),
-        ColorPair(
-            "Secondary Container",
-            getColorInfo(ColorKey.SECONDARY_CONTAINER, viewModel, colorScheme),
-            getColorInfo(ColorKey.ON_SECONDARY_CONTAINER, viewModel, colorScheme)
-        ),
-        ColorPair(
-            "Tertiary Container",
-            getColorInfo(ColorKey.TERTIARY_CONTAINER, viewModel, colorScheme),
-            getColorInfo(ColorKey.ON_TERTIARY_CONTAINER, viewModel, colorScheme)
-        ),
-        ColorPair(
-            "Error",
-            getColorInfo(ColorKey.ERROR, viewModel, colorScheme),
-            getColorInfo(ColorKey.ON_ERROR, viewModel, colorScheme)
-        ),
-        ColorPair(
-            "Error Container",
-            getColorInfo(ColorKey.ERROR_CONTAINER, viewModel, colorScheme),
-            getColorInfo(ColorKey.ON_ERROR_CONTAINER, viewModel, colorScheme)
-        ),
-        ColorPair(
-            "Surface",
-            getColorInfo(ColorKey.SURFACE, viewModel, colorScheme),
-            getColorInfo(ColorKey.ON_SURFACE, viewModel, colorScheme)
-        ),
-        ColorPair(
-            "Surface Variant",
-            getColorInfo(ColorKey.SURFACE_VARIANT, viewModel, colorScheme),
-            getColorInfo(ColorKey.ON_SURFACE_VARIANT, viewModel, colorScheme)
-        ),
-        ColorPair(
-            "Background",
-            getColorInfo(ColorKey.BACKGROUND, viewModel, colorScheme),
-            getColorInfo(ColorKey.ON_BACKGROUND, viewModel, colorScheme)
-        ),
-        ColorPair(
-            "Surface Dim",
-            getColorInfo(ColorKey.SURFACE, viewModel, colorScheme),
-            getColorInfo(ColorKey.SURFACE_DIM, viewModel, colorScheme)
-        ),
-        ColorPair(
-            "Surface Bright",
-            getColorInfo(ColorKey.SURFACE, viewModel, colorScheme),
-            getColorInfo(ColorKey.SURFACE_BRIGHT, viewModel, colorScheme)
-        ),
-        ColorPair(
-            "Surface Container Lowest",
-            getColorInfo(ColorKey.SURFACE, viewModel, colorScheme),
-            getColorInfo(ColorKey.SURFACE_CONTAINER_LOWEST, viewModel, colorScheme)
-        ),
-        ColorPair(
-            "Surface Container Low",
-            getColorInfo(ColorKey.SURFACE, viewModel, colorScheme),
-            getColorInfo(ColorKey.SURFACE_CONTAINER_LOW, viewModel, colorScheme)
-        ),
-        ColorPair(
-            "Surface Container",
-            getColorInfo(ColorKey.SURFACE, viewModel, colorScheme),
-            getColorInfo(ColorKey.SURFACE_CONTAINER, viewModel, colorScheme)
-        ),
-        ColorPair(
-            "Surface Container High",
-            getColorInfo(ColorKey.SURFACE, viewModel, colorScheme),
-            getColorInfo(ColorKey.SURFACE_CONTAINER_HIGH, viewModel, colorScheme)
-        ),
-        ColorPair(
-            "Surface Container Highest",
-            getColorInfo(ColorKey.SURFACE, viewModel, colorScheme),
-            getColorInfo(ColorKey.SURFACE_CONTAINER_HIGHEST, viewModel, colorScheme)
-        ),
-    )
-}
-
-@Composable
-private fun getColorInfo(
-    key: ColorKey,
-    viewModel: ColorViewModel,
-    colorScheme: ColorScheme
-): ColorInfo {
-    val hexColor = viewModel.getColor(key, colorScheme)
-    return ColorInfo(
-        name = key.name,
-        color = hexToColor(hexColor),
-        colorKey = key
-    )
 }
