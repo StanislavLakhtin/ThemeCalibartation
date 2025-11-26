@@ -57,10 +57,13 @@ fun MainScreenView(navigateTo: (Route) -> Unit) {
                 GoToCard("Шрифты") { navigateTo(Route.TypographyScreenRoute) }
             }
             item {
-                GoToCard("Цвета") { navigateTo(Route.ColorScreenRoute) }
+                GoToCard("Примерка") { navigateTo(Route.ColorScreenRoute) }
             }
             item {
                 GoToCard("Палитра") { navigateTo(Route.ColorPickerScreenRoute) }
+            }
+            item {
+                GoToCard("Настройка цветов") { navigateTo(Route.ColorSettingScreenRoute) }
             }
         }
     }

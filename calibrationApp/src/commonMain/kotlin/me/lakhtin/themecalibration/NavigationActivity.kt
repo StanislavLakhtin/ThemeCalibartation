@@ -13,6 +13,7 @@ import me.lakhtin.themecalibration.ui.screens.main.MainScreen
 import me.lakhtin.themecalibration.ui.screens.typography.TypographyScreen
 import androidx.compose.runtime.remember
 import me.lakhtin.themecalibration.ui.screens.colorPicker.viewmodel.ColorViewModel
+import me.lakhtin.themecalibration.ui.screens.colorSetting.ColorSettingScreen
 
 @ExperimentalComposeUiApi
 @Composable
@@ -50,6 +51,10 @@ fun NavigationActivity(
 
         composable<Route.ColorPickerScreenRoute> {
             ColorPickerScreen(viewModel = colorViewModel, navigateTo = navigateFunction)
+        }
+
+        composable<Route.ColorSettingScreenRoute> {
+            ColorSettingScreen(viewModel = colorViewModel, navigateTo = navigateFunction)
         }
     }
 }

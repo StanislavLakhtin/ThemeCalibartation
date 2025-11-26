@@ -68,7 +68,7 @@ fun ColorPickerScreenView(
 
     Scaffold(
         topBar = {
-            TopBar("Color picker") { navigateTo(Route.NavigationUp) }
+            TopBar("Палитра") { navigateTo(Route.NavigationUp) }
         }) { innerPadding ->
         LazyColumn(
             modifier = Modifier.fillMaxSize().padding(innerPadding),
@@ -105,7 +105,7 @@ fun ColorPickerScreenView(
                     horizontalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
                     Button(onClick = {
-                        viewModel.saveColor(selectedColorKey, hexInput.value)
+                        viewModel.saveColor(selectedColorKey, colorToHex(selectedColor.value))
                     }) {
                         Text("Сохранить в")
                     }

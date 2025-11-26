@@ -23,7 +23,7 @@ fun TypographyScreenView(
 ) {
     Scaffold(
         topBar = {
-            TopBar("Typography", { navigateTo(Route.NavigationUp) })
+            TopBar("Шрифты", { navigateTo(Route.NavigationUp) })
         }
 
     ) { innerPadding ->

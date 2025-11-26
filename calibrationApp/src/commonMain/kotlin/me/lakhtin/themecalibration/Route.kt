@@ -17,4 +17,7 @@ sealed class Route {
 
     @Serializable
     data object ColorPickerScreenRoute : Route()
+
+    @Serializable
+    data object ColorSettingScreenRoute : Route()
 }

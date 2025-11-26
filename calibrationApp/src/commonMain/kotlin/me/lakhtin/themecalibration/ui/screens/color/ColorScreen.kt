@@ -58,7 +58,7 @@ fun ColorScreenView(viewModel: ColorViewModel = viewModel(), navigateTo: (Route)
 
     Scaffold(
         topBar = {
-            TopBar("Color", { navigateTo(Route.NavigationUp) })
+            TopBar("Примерка", { navigateTo(Route.NavigationUp) })
         }
     ) { innerPadding ->
         LazyColumn(

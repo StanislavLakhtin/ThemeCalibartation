@@ -76,6 +76,10 @@ class ColorRepository(
         settings[key.toString()] = hex
     }
 
+    fun removeColor(key: ColorKey) {
+        settings.remove(key.toString())
+    }
+
     private fun getDefaultColor(key: ColorKey, colorScheme: ColorScheme): String {
         return colorToHex(
             when (key) {

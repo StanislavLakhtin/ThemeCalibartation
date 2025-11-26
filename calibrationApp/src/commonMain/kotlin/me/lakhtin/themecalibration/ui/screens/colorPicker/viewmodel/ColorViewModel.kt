@@ -26,4 +26,10 @@ class ColorViewModel(
     fun getColor(key: ColorKey, colorScheme: ColorScheme): String {
         return repo.getSavedColor(key, colorScheme)
     }
+
+    fun resetColor(key: ColorKey) {
+        viewModelScope.launch {
+            repo.removeColor(key)
+        }
+    }
 }

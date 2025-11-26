@@ -48,8 +48,7 @@ fun ColorWheelPicker(
         saturationState.value = newHsv[1]
         brightnessState.value = newHsv[2]
     }
-
-
+    
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(24.dp)
@@ -69,10 +68,14 @@ fun ColorWheelPicker(
             hue = selectedHue,
             saturation = saturationState.value,
             brightness = brightnessState.value,
-            onSaturationBrightnessSelected = { s, v ->
+            onSaturationBrightnessSelected = { hue, s, v ->
                 saturationState.value = s
                 brightnessState.value = v
-                onColorSelected(hsvToColor(selectedHue, s, v))
+
+                println(hue)
+
+                val newColor = hsvToColor(hue, s, v)
+                onColorSelected(newColor)
             },
             modifier = Modifier
                 .fillMaxWidth()
@@ -147,29 +150,29 @@ fun SaturationBrightnessPicker(
     hue: Float,
     saturation: Float,
     brightness: Float,
-    onSaturationBrightnessSelected: (saturation: Float, brightness: Float) -> Unit,
+    onSaturationBrightnessSelected: (hue: Float, saturation: Float, brightness: Float) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Box(
         modifier = modifier
-            .pointerInput(Unit) {
+            .pointerInput(hue) {
                 detectTapGestures { pos ->
                     val s = (pos.x / size.width).coerceIn(0f, 1f)
                     val v = 1f - (pos.y / size.height).coerceIn(0f, 1f)
-                    onSaturationBrightnessSelected(s, v)
+                    onSaturationBrightnessSelected(hue,s, v)
                 }
             }
-            .pointerInput(Unit) {
+            .pointerInput(hue) {
                 detectDragGestures(
                     onDragStart = { pos ->
                         val s = (pos.x / size.width).coerceIn(0f, 1f)
                         val v = 1f - (pos.y / size.height).coerceIn(0f, 1f)
-                        onSaturationBrightnessSelected(s, v)
+                        onSaturationBrightnessSelected(hue,s, v)
                     },
                     onDrag = { change, _ ->
                         val s = (change.position.x / size.width).coerceIn(0f, 1f)
                         val v = 1f - (change.position.y / size.height).coerceIn(0f, 1f)
-                        onSaturationBrightnessSelected(s, v)
+                        onSaturationBrightnessSelected(hue,s, v)
                         change.consumeAllChanges()
                     }
                 )
