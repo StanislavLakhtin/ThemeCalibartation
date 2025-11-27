@@ -19,16 +19,15 @@ data class ColorPair(
     val first: ColorInfo,
     val second: ColorInfo
 )
+
 @Composable
 fun getCurrentThemeColors(
-    viewModel: ColorViewModel,
-    colorScheme: ColorScheme
+    themeColors: Map<ColorKey, String>
 ): List<ColorInfo> {
-    return ColorKey.entries.map { key ->
-        val hexColor = viewModel.getColor(key, colorScheme)
+    return themeColors.entries.map { (key, hex) ->
         ColorInfo(
             name = key.name,
-            color = hexToColor(hexColor),
+            color = hexToColor(hex),
             colorKey = key
         )
     }
@@ -36,99 +35,98 @@ fun getCurrentThemeColors(
 
 @Composable
 fun getCurrentThemeColorPairs(
-    viewModel: ColorViewModel,
-    colorScheme: ColorScheme
+    themeColors: Map<ColorKey, String>
 ): List<ColorPair> {
     return listOf(
         ColorPair(
             "Primary",
-            getColorInfo(ColorKey.PRIMARY, viewModel, colorScheme),
-            getColorInfo(ColorKey.ON_PRIMARY, viewModel, colorScheme)
+            getColorInfo(ColorKey.PRIMARY, themeColors),
+            getColorInfo(ColorKey.ON_PRIMARY, themeColors)
         ),
         ColorPair(
             "Secondary",
-            getColorInfo(ColorKey.SECONDARY, viewModel, colorScheme),
-            getColorInfo(ColorKey.ON_SECONDARY, viewModel, colorScheme)
+            getColorInfo(ColorKey.SECONDARY, themeColors),
+            getColorInfo(ColorKey.ON_SECONDARY, themeColors)
         ),
         ColorPair(
             "Tertiary",
-            getColorInfo(ColorKey.TERTIARY, viewModel, colorScheme),
-            getColorInfo(ColorKey.ON_TERTIARY, viewModel, colorScheme)
+            getColorInfo(ColorKey.TERTIARY, themeColors),
+            getColorInfo(ColorKey.ON_TERTIARY, themeColors)
         ),
         ColorPair(
             "Primary Container",
-            getColorInfo(ColorKey.PRIMARY_CONTAINER, viewModel, colorScheme),
-            getColorInfo(ColorKey.ON_PRIMARY_CONTAINER, viewModel, colorScheme)
+            getColorInfo(ColorKey.PRIMARY_CONTAINER, themeColors),
+            getColorInfo(ColorKey.ON_PRIMARY_CONTAINER, themeColors)
         ),
         ColorPair(
             "Secondary Container",
-            getColorInfo(ColorKey.SECONDARY_CONTAINER, viewModel, colorScheme),
-            getColorInfo(ColorKey.ON_SECONDARY_CONTAINER, viewModel, colorScheme)
+            getColorInfo(ColorKey.SECONDARY_CONTAINER, themeColors),
+            getColorInfo(ColorKey.ON_SECONDARY_CONTAINER, themeColors)
         ),
         ColorPair(
             "Tertiary Container",
-            getColorInfo(ColorKey.TERTIARY_CONTAINER, viewModel, colorScheme),
-            getColorInfo(ColorKey.ON_TERTIARY_CONTAINER, viewModel, colorScheme)
+            getColorInfo(ColorKey.TERTIARY_CONTAINER, themeColors),
+            getColorInfo(ColorKey.ON_TERTIARY_CONTAINER, themeColors)
         ),
         ColorPair(
             "Error",
-            getColorInfo(ColorKey.ERROR, viewModel, colorScheme),
-            getColorInfo(ColorKey.ON_ERROR, viewModel, colorScheme)
+            getColorInfo(ColorKey.ERROR, themeColors),
+            getColorInfo(ColorKey.ON_ERROR, themeColors)
         ),
         ColorPair(
             "Error Container",
-            getColorInfo(ColorKey.ERROR_CONTAINER, viewModel, colorScheme),
-            getColorInfo(ColorKey.ON_ERROR_CONTAINER, viewModel, colorScheme)
+            getColorInfo(ColorKey.ERROR_CONTAINER, themeColors),
+            getColorInfo(ColorKey.ON_ERROR_CONTAINER, themeColors)
         ),
         ColorPair(
             "Surface",
-            getColorInfo(ColorKey.SURFACE, viewModel, colorScheme),
-            getColorInfo(ColorKey.ON_SURFACE, viewModel, colorScheme)
+            getColorInfo(ColorKey.SURFACE, themeColors),
+            getColorInfo(ColorKey.ON_SURFACE, themeColors)
         ),
         ColorPair(
             "Surface Variant",
-            getColorInfo(ColorKey.SURFACE_VARIANT, viewModel, colorScheme),
-            getColorInfo(ColorKey.ON_SURFACE_VARIANT, viewModel, colorScheme)
+            getColorInfo(ColorKey.SURFACE_VARIANT, themeColors),
+            getColorInfo(ColorKey.ON_SURFACE_VARIANT, themeColors)
         ),
         ColorPair(
             "Background",
-            getColorInfo(ColorKey.BACKGROUND, viewModel, colorScheme),
-            getColorInfo(ColorKey.ON_BACKGROUND, viewModel, colorScheme)
+            getColorInfo(ColorKey.BACKGROUND, themeColors),
+            getColorInfo(ColorKey.ON_BACKGROUND, themeColors)
         ),
         ColorPair(
             "Surface Dim",
-            getColorInfo(ColorKey.SURFACE, viewModel, colorScheme),
-            getColorInfo(ColorKey.SURFACE_DIM, viewModel, colorScheme)
+            getColorInfo(ColorKey.SURFACE, themeColors),
+            getColorInfo(ColorKey.SURFACE_DIM, themeColors)
         ),
         ColorPair(
             "Surface Bright",
-            getColorInfo(ColorKey.SURFACE, viewModel, colorScheme),
-            getColorInfo(ColorKey.SURFACE_BRIGHT, viewModel, colorScheme)
+            getColorInfo(ColorKey.SURFACE, themeColors),
+            getColorInfo(ColorKey.SURFACE_BRIGHT, themeColors)
         ),
         ColorPair(
             "Surface Container Lowest",
-            getColorInfo(ColorKey.SURFACE, viewModel, colorScheme),
-            getColorInfo(ColorKey.SURFACE_CONTAINER_LOWEST, viewModel, colorScheme)
+            getColorInfo(ColorKey.SURFACE, themeColors),
+            getColorInfo(ColorKey.SURFACE_CONTAINER_LOWEST, themeColors)
         ),
         ColorPair(
             "Surface Container Low",
-            getColorInfo(ColorKey.SURFACE, viewModel, colorScheme),
-            getColorInfo(ColorKey.SURFACE_CONTAINER_LOW, viewModel, colorScheme)
+            getColorInfo(ColorKey.SURFACE, themeColors),
+            getColorInfo(ColorKey.SURFACE_CONTAINER_LOW, themeColors)
         ),
         ColorPair(
             "Surface Container",
-            getColorInfo(ColorKey.SURFACE, viewModel, colorScheme),
-            getColorInfo(ColorKey.SURFACE_CONTAINER, viewModel, colorScheme)
+            getColorInfo(ColorKey.SURFACE, themeColors),
+            getColorInfo(ColorKey.SURFACE_CONTAINER, themeColors)
         ),
         ColorPair(
             "Surface Container High",
-            getColorInfo(ColorKey.SURFACE, viewModel, colorScheme),
-            getColorInfo(ColorKey.SURFACE_CONTAINER_HIGH, viewModel, colorScheme)
+            getColorInfo(ColorKey.SURFACE, themeColors),
+            getColorInfo(ColorKey.SURFACE_CONTAINER_HIGH, themeColors)
         ),
         ColorPair(
             "Surface Container Highest",
-            getColorInfo(ColorKey.SURFACE, viewModel, colorScheme),
-            getColorInfo(ColorKey.SURFACE_CONTAINER_HIGHEST, viewModel, colorScheme)
+            getColorInfo(ColorKey.SURFACE, themeColors),
+            getColorInfo(ColorKey.SURFACE_CONTAINER_HIGHEST, themeColors)
         ),
     )
 }
@@ -136,13 +134,11 @@ fun getCurrentThemeColorPairs(
 @Composable
 fun getColorInfo(
     key: ColorKey,
-    viewModel: ColorViewModel,
-    colorScheme: ColorScheme
+    themeColors: Map<ColorKey, String>
 ): ColorInfo {
-    val hexColor = viewModel.getColor(key, colorScheme)
     return ColorInfo(
         name = key.name,
-        color = hexToColor(hexColor),
+        color = hexToColor(themeColors[key] ?: ""),
         colorKey = key
     )
 }

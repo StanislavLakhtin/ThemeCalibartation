@@ -82,7 +82,6 @@ class ColorRepository(
 
     fun isColorModified(key: ColorKey, colorScheme: ColorScheme, hex: String): Boolean {
         val defaultHex = getDefaultColor(key, colorScheme)
-        println("$defaultHex $hex")
         return defaultHex != hex
     }
 

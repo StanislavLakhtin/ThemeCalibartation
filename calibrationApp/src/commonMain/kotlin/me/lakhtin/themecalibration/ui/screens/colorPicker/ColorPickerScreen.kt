@@ -49,27 +49,14 @@ fun ColorPickerScreenView(
     viewModel: ColorViewModel = ColorViewModel(), navigateTo: (Route) -> Unit
 ) {
     val colorScheme = MaterialTheme.colorScheme
+
+    val colorState by viewModel.colorState.collectAsState()
     val selectedColorKey by viewModel.selectedColorKey.collectAsState()
-    var selectedColor by remember { mutableStateOf<Color>(Color.Red) }
-    var selectedHue by remember { mutableStateOf(0f) }
+
     var hexInput by remember { mutableStateOf("") }
 
-    selectedColorKey?.let { key ->
-        val colorHex = viewModel.getColor(key, colorScheme)
-        val color = hexToColor(colorHex)
-        selectedColor = color
-        selectedHue = colorToHsv(color, null)[0]
-        hexInput = colorHex
-    }
-
-    fun onValueChangeHex(newHex: String) {
-        hexInput = newHex
-        if (isValidHex(newHex)) {
-            val newColor = hexToColor(newHex)
-            val newHsv = colorToHsv(newColor, previousHue = null)
-            selectedHue = newHsv[0]
-            selectedColor = newColor
-        }
+    LaunchedEffect(colorState) {
+        hexInput = colorToHex(colorState.color)
     }
 
     Scaffold(
@@ -86,15 +73,21 @@ fun ColorPickerScreenView(
         ) {
             item {
                 ColorWheelPicker(
-                    selectedColor = selectedColor,
+                    selectedColor = colorState.color,
                     onColorSelected = { newColor ->
-                        if (!colorsAreClose(selectedColor, newColor)) {
-                            selectedColor = newColor
-                            hexInput = colorToHex(newColor)
+                        if (!colorsAreClose(colorState.color, newColor)) {
+                            viewModel.updateColorState(
+                                newColor,
+                            )
                         }
                     },
-                    selectedHue = selectedHue,
-                    onHueSelected = { selectedHue = it },
+                    selectedHue = colorState.hue,
+                    onHueSelected = { newHue ->
+                        viewModel.updateColorState(
+                            colorState.color,
+                            newHue,
+                        )
+                    },
                     modifier = Modifier
                 )
             }
@@ -102,12 +95,20 @@ fun ColorPickerScreenView(
                 ColorInput(
                     hexValue = hexInput,
                     onValueChange = { newHex ->
-                        onValueChangeHex(newHex)
+                        hexInput = newHex
+                        if (isValidHex(newHex)) {
+                            val color = hexToColor(newHex)
+                            val hue = colorToHsv(color, null)[0]
+                            viewModel.updateColorState(
+                                color,
+                                hue = hue
+                            )
+                        }
                     }
                 )
             }
             item {
-                ColorPreviewCard(color = selectedColor)
+                ColorPreviewCard(color = colorState.color)
             }
             item {
                 Row(
@@ -117,7 +118,7 @@ fun ColorPickerScreenView(
                     Button(
                         onClick = {
                             selectedColorKey?.let { key ->
-                                viewModel.saveColor(key, colorToHex(selectedColor))
+                                viewModel.saveColor(key, colorState.hex, colorScheme)
                             }
                         },
                         enabled = selectedColorKey != null
@@ -128,7 +129,10 @@ fun ColorPickerScreenView(
                         viewModel = viewModel,
                         selectedColorKey = selectedColorKey,
                         onColorKeySelected = { newKey ->
-                            viewModel.setSelectedColor(newKey)
+                            viewModel.setSelectedColorKey(
+                                newKey,
+                                colorScheme
+                            )
                         },
                     )
                 }

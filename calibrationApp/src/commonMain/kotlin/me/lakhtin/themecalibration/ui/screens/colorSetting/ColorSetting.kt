@@ -37,34 +37,18 @@ fun ColorSettingScreenView(
     navigateTo: (Route) -> Unit
 ) {
     val colorScheme = MaterialTheme.colorScheme
+
     val themeColors by viewModel.themeColors.collectAsState()
 
-    viewModel.loadThemeColors(colorScheme)
-
-    val hasModifiedColors = themeColors.values.any { colorHex ->
-        ColorKey.entries.any { key ->
-            viewModel.isColorModified(key, colorScheme, colorHex)
+    // TODO: убрать отсюда логику загрузки
+    LaunchedEffect(Unit) {
+        if (themeColors.isEmpty()) {
+            viewModel.loadThemeColors(colorScheme)
         }
     }
 
     Scaffold(
         topBar = {
-//            TopAppBar(
-//                title = { Text("Цвета темы") },
-//                actions = {
-//                    val hasModifiedColors = themeColors.values.any { colorHex ->
-//                        ColorKey.entries.any { key ->
-//                            viewModel.isColorModified(key, colorScheme)
-//                        }
-//                    }
-//                    IconButton(
-//                        onClick = { viewModel.resetAllColors(colorScheme) },
-//                        enabled = hasModifiedColors
-//                    ) {
-//                        Icon(Icons.Default.Refresh, contentDescription = "Сбросить все")
-//                    }
-//                }
-//            )
             TopBar("Настройки") { navigateTo(Route.NavigationUp) }
         }
     ) { paddingValues ->
@@ -85,25 +69,17 @@ fun ColorSettingScreenView(
                 contentPadding = PaddingValues(16.dp),
                 verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {
-                items (1) {
-                    TextButton(
-                        onClick = { viewModel.resetAllColors(colorScheme) },
-                        enabled = hasModifiedColors
-                    ) {
-                        Text("Сбросить все", style = MaterialTheme.typography.headlineSmall)
-                    }
-                }
-
                 items(ColorKey.entries.toTypedArray()) { colorKey ->
                     val colorHex = themeColors[colorKey] ?: return@items
                     val currentColor = hexToColor(colorHex)
+
                     val isModified = viewModel.isColorModified(colorKey, colorScheme, colorHex)
 
                     ColorListItem(
                         colorKey = colorKey,
                         currentColor = currentColor,
                         onColorClick = {
-                            viewModel.setSelectedColor(colorKey)
+                            viewModel.setSelectedColorKey(colorKey, colorScheme)
                             navigateTo(Route.ColorPickerScreenRoute)
                         },
                         onResetClick = { viewModel.resetColor(colorKey, colorScheme) },
@@ -114,6 +90,7 @@ fun ColorSettingScreenView(
         }
     }
 }
+
 
 @Composable
 fun ColorListItem(
