@@ -66,7 +66,7 @@ class ColorViewModel(
         }
     }
 
-    fun saveColor(key: ColorKey, hex: String, colorScheme: ColorScheme) {
+    fun saveColor(key: ColorKey, hex: String) {
         viewModelScope.launch {
             repository.saveColor(key, hex)
 

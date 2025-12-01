@@ -52,6 +52,7 @@ fun ColorPickerScreenView(
 
     val colorState by viewModel.colorState.collectAsState()
     val selectedColorKey by viewModel.selectedColorKey.collectAsState()
+    println(colorState.hex)
 
     var hexInput by remember { mutableStateOf("") }
 
@@ -118,7 +119,7 @@ fun ColorPickerScreenView(
                     Button(
                         onClick = {
                             selectedColorKey?.let { key ->
-                                viewModel.saveColor(key, colorState.hex, colorScheme)
+                                viewModel.saveColor(key, colorToHex(colorState.color))
                             }
                         },
                         enabled = selectedColorKey != null

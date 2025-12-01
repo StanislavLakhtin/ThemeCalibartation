@@ -40,13 +40,6 @@ fun ColorSettingScreenView(
 
     val themeColors by viewModel.themeColors.collectAsState()
 
-    // TODO: убрать отсюда логику загрузки
-    LaunchedEffect(Unit) {
-        if (themeColors.isEmpty()) {
-            viewModel.loadThemeColors(colorScheme)
-        }
-    }
-
     Scaffold(
         topBar = {
             TopBar("Настройки") { navigateTo(Route.NavigationUp) }

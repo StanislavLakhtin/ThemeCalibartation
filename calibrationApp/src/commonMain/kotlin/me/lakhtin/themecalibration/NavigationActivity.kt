@@ -1,6 +1,10 @@
 package me.lakhtin.themecalibration
 
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
@@ -22,6 +26,13 @@ fun NavigationActivity(
     navController: NavHostController = rememberNavController(),
 ) {
     val colorViewModel = remember { ColorViewModel() }
+
+    val colorScheme = MaterialTheme.colorScheme
+
+    // TODO: убрать отсюда логику загрузки
+    LaunchedEffect(Unit) {
+        colorViewModel.loadThemeColors(colorScheme)
+    }
 
     val navigateFunction: (Route) -> Unit = { navigateTo ->
         when (navigateTo) {

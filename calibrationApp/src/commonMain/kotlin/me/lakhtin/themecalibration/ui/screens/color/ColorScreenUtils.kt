@@ -1,12 +1,9 @@
 package me.lakhtin.themecalibration.ui.screens.color
 
-import androidx.compose.material3.ColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import me.lakhtin.themecalibration.data.repository.ColorKey
 import me.lakhtin.themecalibration.ui.screens.colorPicker.utils.hexToColor
-import me.lakhtin.themecalibration.ui.screens.colorPicker.viewmodel.ColorViewModel
-
 
 data class ColorInfo(
     val name: String,
